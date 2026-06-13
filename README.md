@@ -2,7 +2,7 @@
 
 **A git-backed, Markdown-native blackbox flight recorder and skill auditor for autonomous AI agents.**
 
-> Microsoft's **Agent 365** governs agents at the *permission and security* layer — Entra, Defender, Purview, in one control plane. Scout Compass governs the layer that stack doesn't: **memory and competence**. What does your agent know? What did it do, and why? How does it improve — and who approved that?
+> Microsoft's **Agent 365** governs agents at the *permission and security* layer — Entra, Defender, Purview, in one control plane.[^build2026] Scout Compass governs the layer that stack doesn't: **memory and competence**. What does your agent know? What did it do, and why? How does it improve — and who approved that?
 
 *Agents League @ AI Skills Fest 2026 · Reasoning Agents track · Microsoft Foundry + MCP*
 
@@ -134,3 +134,5 @@ TypeScript · MCP SDK (streamable HTTP + stdio) · Microsoft Foundry Agent Servi
 ---
 
 Built solo by [Jeremy Gracey](https://jeremygracey.ai) · [GitHub](https://github.com/JeremyGracey-AI)
+
+[^build2026]: Daigle, Kyle. "Microsoft Build 2026: Be Yourself at Work." *The Official Microsoft Blog*, Microsoft, 2 June 2026, https://blogs.microsoft.com/blog/2026/06/02/microsoft-build-2026-be-yourself-at-work/. Accessed 13 June 2026.
