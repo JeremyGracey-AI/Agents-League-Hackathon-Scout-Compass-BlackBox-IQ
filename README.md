@@ -2,7 +2,7 @@
 
 **A git-backed, Markdown-native blackbox flight recorder and skill auditor for autonomous AI agents.**
 
-> Microsoft's **Agent 365** governs agents at the *permission and security* layer — Entra, Defender, Purview, in one control plane.[^build2026] Scout Compass governs the layer that stack doesn't: **memory and competence**. What does your agent know? What did it do, and why? How does it improve — and who approved that?
+> The agent stack now governs two layers. Microsoft's **Agent 365** governs *permissions and security* — Entra, Defender, Purview, in one control plane.[^build2026] Orchestration platforms govern *actions* — approval gates, spend caps, tool limits.[^omnigent] Scout Compass governs the layer neither touches: **memory and competence**. What does your agent know? What did it do, and why? How does it improve — and who approved that?
 
 *Agents League @ AI Skills Fest 2026 · Reasoning Agents track · Microsoft Foundry + MCP*
 
@@ -112,11 +112,23 @@ and run the demo script in `demo/`.
 - **Creativity (15%)** — agent memory as a human-owned git repo: the git log is the audit trail, `git revert` is rollback, Obsidian is the UI.
 - **UX (15%)** — plain Markdown, live graph view, one-call approval; zero new interfaces to learn.
 
-## Why this matters beyond a demo
+## Where governed memory matters
 
-Regulated industries — healthcare first — cannot deploy autonomous agents
-without exactly this: decision provenance, human-gated capability change, and
-revocable memory. Scout Compass is the pattern, in 100% inspectable plain text.
+Three layers govern an agent, and the third is the one without a control plane:
+
+| Layer | Governs | Who |
+|---|---|---|
+| Permissions & security | identity, policy, who/what an agent may touch | Agent 365 (Entra/Defender/Purview)[^build2026] |
+| Actions | approve/block/pause per action, spend, tools | orchestration platforms[^omnigent] |
+| **Memory & competence** | **what it knows, did, and learned — and who approved it** | **Scout Compass** |
+
+Where the third layer is non-optional:
+
+- **Regulated decisions** (healthcare, finance, legal) — every action needs provenance, human-gated capability change, and revocable memory.
+- **Multi-agent teams** — when one agent's learned skill propagates across a fleet, a human must be able to see, approve, and revert what spreads.
+- **Long-running autonomy** — an always-on agent's competence drifts; the blackbox + audit make the drift visible and the human gate keeps it accountable.
+
+Scout Compass is the pattern, in 100% inspectable plain text.
 
 ## The bigger picture
 
@@ -138,3 +150,5 @@ Built solo by [Jeremy Gracey](https://jeremygracey.ai) · [GitHub](https://githu
 [^build2026]: Daigle, Kyle. "Microsoft Build 2026: Be Yourself at Work." *The Official Microsoft Blog*, Microsoft, 2 June 2026, https://blogs.microsoft.com/blog/2026/06/02/microsoft-build-2026-be-yourself-at-work/. Accessed 13 June 2026.
 
 [^foundryiq]: Daigle, Kyle. "Microsoft Build 2026: Be Yourself at Work — Foundry IQ." *The Official Microsoft Blog*, Microsoft, 2 June 2026, https://aka.ms/BuildFoundryIQ. Accessed 13 June 2026.
+
+[^omnigent]: *Omnigent: Meta-Orchestration for AI Agents.* omnigent-ai, GitHub, 13 June 2026, https://github.com/omnigent-ai/omnigent. Accessed 13 June 2026. (Representative of action-layer agent governance — approval gates, spend caps, tool restrictions.)
