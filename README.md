@@ -77,7 +77,7 @@ the human owns; **Foundry IQ** is read-only institutional grounding. See
 
 ### Microsoft IQ grounding
 
-Atlas grounds on **Microsoft Foundry IQ** — an Azure AI Search knowledge base of
+Atlas grounds on **Microsoft Foundry IQ**[^foundryiq] — an Azure AI Search knowledge base of
 institutional reference content (vendor master, org directory, company handbook),
 exposed two ways: a native knowledge attach on the agent and the
 `ground_foundry_iq` tool above. Grounding is held strictly **orthogonal to the
@@ -136,3 +136,5 @@ TypeScript · MCP SDK (streamable HTTP + stdio) · Microsoft Foundry Agent Servi
 Built solo by [Jeremy Gracey](https://jeremygracey.ai) · [GitHub](https://github.com/JeremyGracey-AI)
 
 [^build2026]: Daigle, Kyle. "Microsoft Build 2026: Be Yourself at Work." *The Official Microsoft Blog*, Microsoft, 2 June 2026, https://blogs.microsoft.com/blog/2026/06/02/microsoft-build-2026-be-yourself-at-work/. Accessed 13 June 2026.
+
+[^foundryiq]: Daigle, Kyle. "Microsoft Build 2026: Be Yourself at Work — Foundry IQ." *The Official Microsoft Blog*, Microsoft, 2 June 2026, https://aka.ms/BuildFoundryIQ. Accessed 13 June 2026.
