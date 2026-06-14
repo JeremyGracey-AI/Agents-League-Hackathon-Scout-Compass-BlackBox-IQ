@@ -2,7 +2,7 @@
 
 **Audience:** Claude Code (desktop), continuing this build with Jeremy Gracey.
 **Read this fully before touching code.** Repo:
-`github.com/JeremyGracey-AI/Agents-League-Hackathon-Scout-Compass-BlackBox-IQ`.
+`github.com/JeremyGracey-AI/Agents-League-Hackathon-Compass-BlackBox-IQ`.
 
 ---
 

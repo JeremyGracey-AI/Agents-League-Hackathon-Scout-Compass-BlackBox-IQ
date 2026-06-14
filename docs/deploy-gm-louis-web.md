@@ -18,7 +18,7 @@ server (`az extension add --name containerapp`; register `Microsoft.App` +
 ## 1. Build the image (reuse the GGR registry)
 
 ```bash
-cd ~/GitHub/Agents-League-Hackathon-Scout-Compass-BlackBox-IQ
+cd ~/GitHub/Agents-League-Hackathon-Compass-BlackBox-IQ
 az acr build -r scoutcompassacr -t gm-louis-web:latest -f compass-rose/Dockerfile compass-rose
 ```
 (If `scoutcompassacr` doesn't exist yet, create it per `docs/deploy-container-apps.md` step 1.)
