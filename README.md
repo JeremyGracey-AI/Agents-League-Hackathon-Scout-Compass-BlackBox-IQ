@@ -44,21 +44,24 @@ flowchart LR
 ## Architecture
 
 ```
-Foundry Agent ("GM Louis")  ──MCP (streamable HTTP)──►  Compass MCP Server (TypeScript)
-   multi-step reasoning     10 tools                     │
-        │                                                ▼
+Foundry Agent ("GM Louis")  ──MCP (streamable HTTP, auth-gated)──►  BlackBox IQ (GGR) server (TypeScript)
+   multi-step reasoning      11 tools                                │
+        │                                                            ▼
         │                          Vault (git repo, Markdown) — GOVERNED MEMORY
         │                          decisions · skills · knowledge · proposed
         ▼
-  Microsoft Foundry IQ (Azure AI Search)  ── READ-ONLY GROUNDING (source:foundry-iq),
-  vendor master · org directory · handbook    kept orthogonal to the vault, never merged
+  F.A.M. grounding — read-only, source-tagged, never merged into the vault:
+   · Foundry IQ — Facts     (Azure AI Search KB)          [iq:]      ─ live
+   · Work IQ    — Activity  (M365 Copilot / Work IQ GW)   [work:]    ─ live
+   · Fabric IQ  — Meaning   (RDF/OWL Fabric IQ ontology)  [fabric:]  ─ roadmap
 
 Human ◄── Obsidian (live graph view) ◄── Vault     approves / rejects / reverts
 ```
 
-Two retrieval surfaces, deliberately separate: the **vault** is governed memory
-the human owns; **Foundry IQ** is read-only institutional grounding. See
-`docs/architecture.svg` for the full diagram.
+Grounding (F.A.M.) is read-only and kept strictly **orthogonal** to the vault —
+three lenses, each source-tagged, never merged into the governed memory the human
+owns. The MCP endpoint is **auth-gated** (bearer token) so the tunnel can't be
+called anonymously. See `docs/architecture.svg` and `docs/fam-and-the-engine.md`.
 
 ## Tools (MCP surface)
 
@@ -73,7 +76,8 @@ the human owns; **Foundry IQ** is read-only institutional grounding. See
 | `reject_proposal` | **human gate** | delete with reason |
 | `revert_memory` | **human gate** | `git revert` a `[compass]`/`[human]` commit. Refuses `[blackbox]` commits: the flight recorder is append-only |
 | `memory_log` | anyone | the audit trail itself |
-| `ground_foundry_iq` | agent | **read-only IQ grounding** — Microsoft Foundry IQ (Azure AI Search KB) for institutional facts (vendor master, org directory, handbook), tagged `source:foundry-iq`. Held separate from vault memory: never merged with `recall_knowledge`, never cited as a vault note |
+| `ground_foundry_iq` | agent | **read-only IQ grounding — Facts.** Microsoft Foundry IQ (Azure AI Search KB) for institutional facts (vendor master, org directory, handbook), tagged `source:foundry-iq` / `[iq:]`. Held separate from vault memory: never merged with `recall_knowledge`, never cited as a vault note |
+| `ground_work_iq` | agent | **read-only IQ grounding — Activity.** Live calls to the **Microsoft Work IQ Gateway** (M365 Copilot Chat API) for the signed-in user's organizational context (mail, calendar, people), tagged `source:work-iq` / `[work:]`. Per-user (the token scopes what it sees); same orthogonality contract |
 
 ### Microsoft IQ grounding
 
@@ -84,17 +88,27 @@ into governed memory. Competence over that world is measured with grounded
 theory's **constant comparative analysis** — acceptance tests *fit* and *work*.
 See **[`docs/fam-and-the-engine.md`](docs/fam-and-the-engine.md)**.
 
-GM Louis grounds on **Microsoft Foundry IQ**[^foundryiq] — an Azure AI Search knowledge base of
-institutional reference content (vendor master, org directory, company handbook),
-exposed two ways: a native knowledge attach on the agent and the
-`ground_foundry_iq` tool above. Grounding is held strictly **orthogonal to the
-vault**: results carry `source:foundry-iq` provenance and `[iq:]` citations, are
-never merged or re-ranked with vault recall, and can never mutate or override what
-a human approved. The split is the thesis in one line — **Microsoft governs
-permissions and grounding; Compass-BlackBox IQ governs memory and competence.** Fabric
-IQ and Work IQ are wired as additive siblings (read-only, same orthogonality
-contract) — see `docs/iq-source-decisions.md` for why they're deferred and what
-each would take.
+Two of the three lenses are **live**; the third is authored and wired as an honest next step:
+
+- **Foundry IQ (Facts)**[^foundryiq] — live. An Azure AI Search knowledge base of
+  institutional reference (vendor master, org directory, handbook) via
+  `ground_foundry_iq`, tagged `source:foundry-iq` / `[iq:]`.
+- **Work IQ (Activity)** — live. Real calls to the **Microsoft Work IQ Gateway**
+  (M365 Copilot Chat API) for the signed-in user's work context via
+  `ground_work_iq`, tagged `source:work-iq` / `[work:]`. Per-user: the user's token
+  scopes exactly what it can see.
+- **Fabric IQ (Meaning)** — a business ontology (RDF/OWL, in Microsoft's Fabric IQ
+  format) modeling entities and relationships; see
+  `foundry/knowledge-sources/fabric-iq/`. Live wiring (a Fabric Data Agent or the
+  Fabric IQ Ontology MCP, in a Fabric tenant) is the documented next step — **not
+  claimed as live.**
+
+All grounding is held strictly **orthogonal to the vault**: source-tagged, never
+merged or re-ranked with `recall_knowledge`, never able to override what a human
+approved. The split is the thesis in one line — **Microsoft governs permissions
+and grounding; Compass-BlackBox IQ governs memory and competence.** The MCP
+endpoint is **auth-gated** (bearer token) so the public tunnel can't be called
+anonymously now that grounding can reach a per-user token.
 
 ## Quickstart
 
