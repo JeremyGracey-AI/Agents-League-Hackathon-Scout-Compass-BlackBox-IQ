@@ -51,13 +51,20 @@ in the same thread.
 ## Two staged beats
 
 ### 1. Orthogonality money-shot (two surfaces, never merged)
-> "We got a **net-60 invoice from Vandelay Imports** — who are they, and what's our policy?"
+> "Who is **Vandelay Imports**, and what's our standard policy on **net-60** terms?"
 
-GM Louis grounds vendor identity from **Foundry IQ** → `[iq: vendor-master.csv]`
-(Vandelay Imports · industrial parts · US-East · **active**) **and** recalls the
-rule from the **vault** → `[vault: kn-payment-policy]` (net-30; anything beyond
-needs human). Two sources, tagged separately, under their own sections — the
-thesis in one answer.
+Phrased as a pure **lookup** on purpose — keep the invoice/"triage this" framing
+out, so GM Louis answers and cites without logging a decision. It grounds vendor
+identity from **Foundry IQ** → `[iq: vendor-master.csv]` (Vandelay Imports ·
+industrial parts · US-East · **active**) **and** recalls the rule from the
+**vault** → `[vault: kn-payment-policy]` (net-30; anything beyond needs human).
+Two sources, tagged separately, under their own sections — the thesis in one
+answer.
+
+> Boundary note: if you instead say "**triage** this net-60 invoice from
+> Vandelay," that's an **action** — GM Louis runs the full governed loop and
+> **logs** a `needs_human` decision (a known-vendor variant of the trap email).
+> Both are valid; pick one per your script so the behavior is deterministic.
 
 ### 2. Honesty / no-hallucination beat (optional — test on the day)
 > "What's our 401(k) match?"
@@ -65,6 +72,25 @@ thesis in one answer.
 The handbook has **no** retirement/401(k) content (verified absent). GM Louis
 should say it isn't in the grounding sources rather than invent a number. Great
 proof of honest grounding — but confirm gpt-4.1's actual reply before filming.
+
+---
+
+## Verify live before filming (the agent layer the curl checks don't cover)
+
+The answers above are verified at the **tool** layer (`ground_foundry_iq` returns
+the right rows). They do **not** prove GM Louis retrieves and answers correctly —
+and the rule #2 carve-out ("informational lookup ⇒ no decision record") lives in
+the **Foundry instructions**, which must be **republished** (version must tick
+up). After republishing, run one live pass covering **both sides of the line**:
+
+- **(a) Lookup side:** "Who is the COO?" → grounds, answers `Dana Whitfield
+  [iq: org-directory.csv]`, and writes **no** decision record (`git -C vault log`
+  shows no new `dec-NNN`).
+- **(b) Action side:** the trap email (Initech net-60 invoice) → still **logs**
+  `dec-NNN` with `outcome: needs_human` exactly as before. This is the
+  load-bearing demo; confirm the carve-out didn't suppress it.
+
+Until both pass live, treat the bank as **data-verified, agent-behavior pending**.
 
 ---
 
