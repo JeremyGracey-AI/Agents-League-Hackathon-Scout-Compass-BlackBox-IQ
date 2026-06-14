@@ -75,6 +75,8 @@ interface ResolvedBackend extends BackendSpec {
   ksName: string | null;
   ksKind: string;
   userToken: string | null; // optional x-ms-query-source-authorization (per-user ACL sources)
+  gateway: string | null; // Work IQ Gateway base URL (conversations/chat API) — bypasses the KB path
+  timeZone: string; // locationHint.timeZone for the Work IQ chat request
 }
 
 const SPECS: BackendSpec[] = [
@@ -113,9 +115,10 @@ const SPECS: BackendSpec[] = [
     defaultKind: "workIQ",
     requireKs: true,
     description:
-      "READ-ONLY grounding via Microsoft Work IQ — organizational context from M365 (people, " +
-      "meetings, documents, chats) via Microsoft Graph/Copilot, tagged source:work-iq. " +
-      "Permission-aware: set WORK_IQ_USER_TOKEN to enforce per-user ACLs. Not vault memory.",
+      "READ-ONLY grounding via the Microsoft Work IQ Gateway (Microsoft 365 Copilot Chat API) — " +
+      "live organizational context from M365 (people, meetings, mail, documents) for the signed-in " +
+      "user, tagged source:work-iq. Per-user: the WORK_IQ_USER_TOKEN scopes exactly what it can see. " +
+      "Not vault memory.",
   },
 ];
 
@@ -136,11 +139,14 @@ function resolve(spec: BackendSpec): ResolvedBackend {
     ksName: env(`${p}_KS`) ?? null,
     ksKind: env(`${p}_KS_KIND`) ?? spec.defaultKind,
     userToken: env(`${p}_USER_TOKEN`) ?? null,
+    gateway: env(`${p}_GATEWAY`) ?? null,
+    timeZone: env(`${p}_TIMEZONE`) ?? "Etc/UTC",
   };
 }
 
 /** A backend is enabled when it can form a valid request (and is pinned, if remote). */
 function isEnabled(b: ResolvedBackend): boolean {
+  if (b.gateway && b.userToken) return true; // Work IQ Gateway mode: live per-user call, no KB needed
   return Boolean(b.endpoint && b.key && b.kb && (!b.requireKs || b.ksName));
 }
 
@@ -268,6 +274,60 @@ async function retrieve(query: string, b: ResolvedBackend): Promise<IqGroundingR
   }
 }
 
+/**
+ * Work IQ Gateway path: a live, per-user call to the Microsoft Work IQ Gateway
+ * (Microsoft 365 Copilot Chat API) — create a conversation, then chat. Returns the
+ * agent's grounded reply tagged source:work-iq. Used instead of the KB /retrieve
+ * path when WORK_IQ_GATEWAY + WORK_IQ_USER_TOKEN are set. Read-only; the signed-in
+ * user's token scopes what it can see; never merged into vault memory.
+ */
+async function retrieveWorkIQGateway(query: string, b: ResolvedBackend): Promise<IqGroundingResult> {
+  const base = b.gateway!.replace(/\/+$/, "");
+  const headers = { Authorization: `Bearer ${b.userToken}`, "Content-Type": "application/json" };
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 45000); // Work IQ reasoning runs longer than a KB retrieve
+  try {
+    const convRes = await fetch(`${base}/rest/beta/conversations`, { method: "POST", headers, body: "{}", signal: controller.signal });
+    if (!convRes.ok) {
+      return { source: b.source, available: false, results: [], error: `work-iq conversation failed: ${convRes.status} ${convRes.statusText}` };
+    }
+    const conv: unknown = await convRes.json();
+    const convId = isRecord(conv) ? asString(conv.id) : null;
+    if (!convId) return { source: b.source, available: false, results: [], error: "work-iq: no conversation id returned" };
+
+    const chatRes = await fetch(`${base}/rest/beta/conversations/${encodeURIComponent(convId)}/chat`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ message: { text: query }, locationHint: { timeZone: b.timeZone } }),
+      signal: controller.signal,
+    });
+    if (!chatRes.ok) {
+      return { source: b.source, available: false, results: [], error: `work-iq chat failed: ${chatRes.status} ${chatRes.statusText}` };
+    }
+    const data: unknown = await chatRes.json();
+    const msgs = isRecord(data) && Array.isArray(data.messages) ? data.messages : [];
+    const last = msgs.length ? msgs[msgs.length - 1] : null;
+    const reply = isRecord(last) ? asString(last.text) : null;
+    const attributions = isRecord(last) && Array.isArray(last.attributions) ? last.attributions.length : 0;
+    return {
+      source: b.source,
+      available: true,
+      results: reply
+        ? [{ source: b.source, ref_id: convId, title: "Work IQ (Microsoft 365 Copilot)", excerpt: clip(reply, 2400), knowledge_source: attributions ? `${attributions} M365 source(s)` : "work-iq" }]
+        : [],
+      instruction:
+        `External grounding ONLY — this is NOT vault memory. Present under a section labeled ` +
+        `'### From Work IQ (M365)' with [work: <ref>] citations, separate from recall_knowledge's ` +
+        `[vault: ...] section. Never merge, re-rank, or cite a work-iq ref as a vault note in log_decision.`,
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown error";
+    return { source: b.source, available: false, results: [], error: `work-iq unreachable: ${message}` };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 /** Names of the grounding tools that would register under the current env (for startup logging). */
 export function groundingSummary(): string {
   const on = SPECS.map(resolve).filter(isEnabled).map((b) => b.source);
@@ -295,7 +355,8 @@ export function registerGroundingTools(server: McpServer): string[] {
           query: z.string().describe("Keywords or a question to ground against enterprise reference data"),
         },
       },
-      async ({ query }: { query: string }) => text(await retrieve(query, backend)),
+      async ({ query }: { query: string }) =>
+        text(await (backend.gateway && backend.userToken ? retrieveWorkIQGateway(query, backend) : retrieve(query, backend))),
     );
     registered.push(spec.tool);
   }
