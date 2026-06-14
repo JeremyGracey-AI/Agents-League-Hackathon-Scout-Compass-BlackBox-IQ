@@ -1,37 +1,43 @@
 # IQ / Vault Orthogonality Rule
 
-**Status:** Load-bearing — do not relax without a full audit of GM Louis's system prompt.
+**Status:** Load-bearing — grounding must never merge into governed memory.
 
 ## The rule
 
-GM Louis exposes two retrieval tools:
+GM Louis has one **governed-memory** recall tool and the **read-only grounding**
+tools of F.A.M. Their results appear in separate, source-tagged lanes — never
+merged, blended, re-ranked, or allowed to suppress each other.
 
-| Tool | Source | Citation prefix |
-|------|--------|-----------------|
-| `recall_knowledge` | Compass vault | `[vault: ...]` |
-| `knowledge_base_retrieve` | Azure AI Search KB (via `scout-compass-kb-mcp` RemoteTool) | `[kb: ...]` |
+| Tool | Surface | Lane / citation |
+|------|---------|-----------------|
+| `recall_knowledge` | the git vault — **governed memory** | `[vault: …]` |
+| `ground_foundry_iq` | Foundry IQ — **Facts** (Azure AI Search KB) | `[iq: …]` |
+| `ground_work_iq` | Work IQ — **Activity** (M365 Copilot Gateway) | `[work: …]` |
+| `ground_fabric_iq` | Fabric IQ — **Meaning** (RDF/OWL ontology) | `[fabric: …]` |
 
-These tools' results **must appear in separate, labeled sections** in every GM Louis response.
-They must **never** be merged, blended, re-ranked together, or allowed to suppress each other.
+Grounding (F.A.M.) is **rented**: read-only, source-tagged, never written into
+the vault. The vault is **owned**: governed, human-gated, revertible. The seam
+between them is the thesis.
 
 ## Why this is load-bearing
 
-The KB MCP connection has no content-level filter that prevents IQ answers from
-resembling vault content. The only guardrails are:
+Grounding answers can resemble vault content. Two enforcement points keep them apart:
 
-1. **Orthogonal content design** — the KB index contains institutional/IQ content that
-   does not duplicate vault documents. Keep them topically separate at ingestion time.
-2. **GM Louis system-prompt instructions** — the labeled-sections rule in the agent definition
-   (`foundry/agents/gm-louis-agent.json`) is the enforcement mechanism at inference time.
+1. **Server (tool layer):** `server/src/ground.ts` is additive and isolated —
+   grounding results are returned by their own tools and are **never merged** into
+   `recall_knowledge`'s scored array. `server/src/tools.ts` (the vault) is
+   untouched, so the promoted-skill ranking the demo depends on is unchanged.
+2. **Agent contract:** `agent/gm-louis-instructions.md` requires each surface
+   under its own labeled section with its own citation prefix, and forbids citing
+   a grounding ref as a vault note in `log_decision`.
 
-If either guardrail weakens, IQ answers can silently override vault results. This document
-exists so that changes to the agent instructions or the KB ingestion pipeline require an
-explicit acknowledgement of this risk.
+If either weakens, grounding could silently override governed memory — the one
+thing this rule exists to prevent.
 
-## Enforcement checklist (review on any GM Louis instruction change)
+## Enforcement checklist (review on any grounding or agent-instruction change)
 
-- [ ] `recall_knowledge` results still appear under `### From vault (recall_knowledge)`
-- [ ] `knowledge_base_retrieve` results still appear under `### From knowledge base (knowledge_base_retrieve)`
-- [ ] No instruction tells GM Louis to "use whichever result is more relevant" across tools
-- [ ] No instruction tells GM Louis to deduplicate across tools
-- [ ] KB index content does not duplicate vault document content (ingestion hygiene)
+- [ ] Each grounding tool's results stay in their own `### From <surface>` section
+- [ ] No grounding result is merged into `recall_knowledge`'s results array (`ground.ts` stays additive)
+- [ ] No instruction tells GM Louis to "use whichever result is more relevant" across surfaces, or to deduplicate across them
+- [ ] A grounding ref (`[iq:]` / `[work:]` / `[fabric:]`) is never cited as a vault note in `log_decision`
+- [ ] `node demo/smoke-test.mjs` still passes after any server change (governed loop green)
