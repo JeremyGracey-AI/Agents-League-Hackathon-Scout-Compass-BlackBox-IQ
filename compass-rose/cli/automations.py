@@ -160,7 +160,7 @@ def render_automation_yaml(automation: Automation) -> str:
 def render_manifest(automations: list[Automation]) -> str:
     manifest = {
         "version": "0.1",
-        "generated_by": "scout-compass",
+        "generated_by": "compass-rose",
         "note": SCHEMA_NOTE,
         "automations": [automation_to_doc(a) for a in automations],
     }

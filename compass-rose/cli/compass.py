@@ -508,7 +508,7 @@ def list_personas() -> list[Path]:
 
 
 def interactive_main() -> int:
-    print("Scout Compass")
+    print("Compass Rose")
     print("=" * 50)
 
     personas = list_personas()
