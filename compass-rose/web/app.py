@@ -440,5 +440,64 @@ def api_persona_yaml():
     )
 
 
+# ---- Tab 2: GM Louis — live F.A.M. reasoning + grounding trace ----
+# Calls the real BlackBox IQ (GGR) MCP server and surfaces the orthogonal seam:
+# Vault (governed memory) + Foundry IQ (Facts) + Work IQ (Activity) + Fabric IQ (Meaning).
+import json as _json
+import urllib.request as _urlreq
+
+MCP_URL = os.environ.get("MCP_URL", "http://127.0.0.1:3000/mcp")
+GGR_KEY = os.environ.get("GGR_KEY", "")
+
+
+def _mcp_call(tool, arguments, timeout=55):
+    """One MCP tools/call against the GGR server; parses the streamable-HTTP (SSE) reply."""
+    payload = {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+               "params": {"name": tool, "arguments": arguments}}
+    headers = {"Content-Type": "application/json",
+               "Accept": "application/json, text/event-stream"}
+    if GGR_KEY:
+        headers["Authorization"] = f"Bearer {GGR_KEY}"
+    req = _urlreq.Request(MCP_URL, data=_json.dumps(payload).encode(), method="POST", headers=headers)
+    with _urlreq.urlopen(req, timeout=timeout) as r:
+        raw = r.read().decode("utf-8", "replace")
+    for line in raw.splitlines():
+        if line.startswith("data:"):
+            try:
+                msg = _json.loads(line[5:].strip())
+            except Exception:
+                continue
+            if isinstance(msg, dict) and "result" in msg:
+                try:
+                    return _json.loads(msg["result"]["content"][0]["text"])
+                except Exception:
+                    return msg["result"]
+    return None
+
+
+@app.route("/trace")
+def trace_page():
+    return render_template("trace.html")
+
+
+@app.route("/api/trace", methods=["POST"])
+def api_trace():
+    query = ((request.get_json(silent=True) or {}).get("query") or "").strip()
+    if not query:
+        return jsonify({"error": "Enter a task or question."}), 400
+    out = {"query": query}
+    for key, tool in (("vault", "recall_knowledge"),
+                      ("foundry", "ground_foundry_iq"),
+                      ("work", "ground_work_iq")):
+        try:
+            out[key] = _mcp_call(tool, {"query": query})
+        except Exception as e:  # noqa: BLE001
+            out[key] = {"error": str(e)}
+    # Fabric IQ (Meaning): ontology authored, not wired live — stay honest.
+    out["fabric"] = {"roadmap": True,
+                     "note": "Fabric IQ ontology authored (foundry/knowledge-sources/fabric-iq); live wiring is the documented next step."}
+    return jsonify(out)
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
