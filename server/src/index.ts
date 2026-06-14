@@ -44,6 +44,22 @@ async function mainHttp(): Promise<void> {
   const app = express();
   app.use(express.json());
 
+  const GGR_KEY = process.env.GGR_KEY;
+  // Auth gate: when GGR_KEY is set, every /mcp request must present
+  // `Authorization: Bearer <GGR_KEY>`. This protects the publicly-tunneled
+  // endpoint — and the per-user Work IQ token it can reach — from anonymous
+  // callers. In Foundry, configure it as a key-based MCP credential
+  // (name `Authorization`, value `Bearer <GGR_KEY>`). /healthz stays open.
+  if (GGR_KEY) {
+    app.use("/mcp", (req, res, next) => {
+      if (req.get("authorization") === `Bearer ${GGR_KEY}`) {
+        next();
+        return;
+      }
+      res.status(401).json({ error: "unauthorized" });
+    });
+  }
+
   // Stateless mode: every request gets a fresh server+transport pair.
   // Simplest reliable wiring for Foundry's remote MCP client; fine at demo scale.
   app.post("/mcp", async (req, res) => {
@@ -63,7 +79,7 @@ async function mainHttp(): Promise<void> {
 
   const port = Number(process.env.PORT ?? 3000);
   app.listen(port, () => {
-    console.error(`[ggr] http mode on :${port}/mcp, vault: ${VAULT_PATH} | ${IQ_STATUS}`);
+    console.error(`[ggr] http mode on :${port}/mcp${GGR_KEY ? " (auth: on)" : " (auth: OFF)"}, vault: ${VAULT_PATH} | ${IQ_STATUS}`);
   });
 }
 
