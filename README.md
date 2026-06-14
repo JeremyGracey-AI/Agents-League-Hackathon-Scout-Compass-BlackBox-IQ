@@ -1,4 +1,6 @@
-# Compass-BlackBox IQ
+<p align="center"><img src="docs/submission/compass-logo.png" alt="Compass-BlackBox IQ" width="120"/></p>
+<h1 align="center">Compass-BlackBox IQ</h1>
+<p align="center"><b>The flight recorder for autonomous agents — governed memory &amp; competence, in plain text.</b></p>
 
 **A git-backed, Markdown-native blackbox flight recorder and skill auditor for autonomous AI agents.**
 
