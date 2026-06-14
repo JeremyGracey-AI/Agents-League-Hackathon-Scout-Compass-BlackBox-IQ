@@ -21,7 +21,7 @@
   <text x="90" y="176" font-size="11" fill="#4f46e5">institutional reference — who / what</text>
   <text x="90" y="194" font-size="11" fill="#4f46e5">vendor master · org directory · handbook</text>
   <text x="90" y="216" font-size="10.5" fill="#6366f1">[iq:] · retrieval over documents</text>
-  <text x="90" y="234" font-size="10.5" fill="#818cf8">Azure AI Search KB</text>
+  <text x="90" y="234" font-size="10.5" fill="#16a34a">Azure AI Search KB · LIVE</text>
 
   <rect x="430" y="128" width="340" height="118" rx="8" fill="#ffffff" stroke="#c7d2fe"/>
   <text x="448" y="153" font-size="13.5" font-weight="700" fill="#312e81">Work IQ</text>
@@ -29,7 +29,7 @@
   <text x="448" y="176" font-size="11" fill="#4f46e5">live Microsoft 365 — what's happening now</text>
   <text x="448" y="194" font-size="11" fill="#4f46e5">people · meetings · mail, this week</text>
   <text x="448" y="216" font-size="10.5" fill="#6366f1">[work:] · user-scoped, permission-aware</text>
-  <text x="448" y="234" font-size="10.5" fill="#818cf8">Work IQ Gateway (REST / A2A)</text>
+  <text x="448" y="234" font-size="10.5" fill="#16a34a">Work IQ Gateway (REST / A2A) · LIVE</text>
 
   <rect x="788" y="128" width="340" height="118" rx="8" fill="#ffffff" stroke="#c7d2fe"/>
   <text x="806" y="153" font-size="13.5" font-weight="700" fill="#312e81">Fabric IQ</text>
@@ -37,7 +37,7 @@
   <text x="806" y="176" font-size="11" fill="#4f46e5">ontology / knowledge graph — how things relate</text>
   <text x="806" y="194" font-size="11" fill="#4f46e5">net-60 is-a deviation → requires approval</text>
   <text x="806" y="216" font-size="10.5" fill="#6366f1">[fabric:] · modeled relationships, not a lookup</text>
-  <text x="806" y="234" font-size="10.5" fill="#818cf8">Fabric IQ ontology (RDF / OWL)</text>
+  <text x="806" y="234" font-size="10.5" fill="#b45309">Fabric IQ ontology (RDF / OWL) · ROADMAP</text>
 
   <text x="74" y="268" font-size="12" font-weight="600" fill="#3730a3">Facts + Activity + Meaning = the complete grounded world</text>
   <text x="486" y="268" font-size="11.5" fill="#4338ca">· source-tagged · each earns a distinct citation · never merged into governed memory</text>
