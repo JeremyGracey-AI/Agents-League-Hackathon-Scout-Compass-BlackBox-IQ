@@ -6,56 +6,64 @@
 <title>GM Louis — F.A.M. reasoning trace</title>
 <style>
   :root{
-    --bg:#0a0e1a; --panel:#131a2e; --panel2:#0f1525; --line:#1e2942;
-    --ink:#e6edf7; --mut:#93a1bd; --dim:#5b6b8c;
-    --vault:#f59e0b; --facts:#3b82f6; --activity:#14b8a6; --meaning:#8b5cf6;
+    --bg:#0a0e1a; --panel:#121a2e; --panel2:#0e1424; --line:#1d2840; --line2:#26324f;
+    --ink:#e8eef9; --mut:#94a2be; --dim:#5d6c8d;
+    --vault:#f5a524; --facts:#3b82f6; --activity:#16c2a3; --meaning:#9871f0;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, #142042 0%, var(--bg) 55%);color:var(--ink);
+  body{margin:0;background:radial-gradient(1100px 560px at 72% -12%, #16224a 0%, var(--bg) 56%);color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px}
-  header{display:flex;align-items:center;gap:16px;margin-bottom:6px}
-  header img{width:54px;height:54px;border-radius:12px;flex:none}
-  .brand h1{margin:0;font-size:22px;letter-spacing:.2px}
-  .brand p{margin:2px 0 0;color:var(--mut);font-size:13px}
-  .nav{margin-left:auto;display:flex;gap:8px}
-  .nav a{color:var(--mut);text-decoration:none;font-size:13px;border:1px solid var(--line);padding:7px 12px;border-radius:8px}
-  .nav a:hover{color:var(--ink);border-color:#2c3a5e}
-  .thesis{color:var(--mut);font-size:13.5px;margin:14px 0 18px;line-height:1.5}
-  .thesis b{color:var(--ink)}
-  .bar{display:flex;gap:10px;margin:8px 0 10px}
+  a{color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:26px 24px 64px}
+  header{display:flex;align-items:center;gap:15px}
+  header img{width:52px;height:52px;border-radius:13px;flex:none;box-shadow:0 6px 22px rgba(59,130,246,.18)}
+  .brand h1{margin:0;font-size:21px;letter-spacing:.2px;font-weight:650}
+  .brand p{margin:3px 0 0;color:var(--mut);font-size:12.5px}
+  .nav{margin-left:auto}
+  .nav a{color:var(--mut);text-decoration:none;font-size:13px;border:1px solid var(--line);padding:8px 13px;border-radius:9px}
+  .nav a:hover{color:var(--ink);border-color:var(--line2)}
+  .thesis{color:var(--mut);font-size:13.5px;margin:16px 0 20px;line-height:1.55;max-width:880px}
+  .thesis b{color:var(--ink);font-weight:600}
+  .bar{display:flex;gap:10px}
   .bar input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
-    padding:14px 16px;border-radius:11px;font-size:15px;outline:none}
+    padding:14px 16px;border-radius:12px;font-size:15px;outline:none;transition:border-color .15s}
   .bar input:focus{border-color:#3a4a72}
-  .bar button{background:linear-gradient(180deg,#3b82f6,#2563eb);color:#fff;border:0;border-radius:11px;
-    padding:0 22px;font-size:15px;font-weight:600;cursor:pointer}
-  .bar button:disabled{opacity:.55;cursor:default}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-  .chip{background:var(--panel);border:1px solid var(--line);color:var(--mut);font-size:12.5px;
-    padding:7px 11px;border-radius:999px;cursor:pointer}
-  .chip:hover{color:var(--ink);border-color:#2c3a5e}
-  .seam{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:12px;margin:6px 0 14px;text-transform:uppercase;letter-spacing:.12em}
-  .seam .ln{flex:1;height:1px;background:var(--line)}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;min-height:150px}
-  .card .top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
-  .dot{width:9px;height:9px;border-radius:50%}
-  .card .lens{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin-left:auto}
-  .card h3{margin:0;font-size:14.5px}
-  .card .cite{font-size:11px;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  .card .body{padding:14px 16px;font-size:13px;color:#cdd8ec;line-height:1.55;white-space:pre-wrap;max-height:280px;overflow:auto}
-  .card .body .note{display:inline-block;background:#1b2440;border:1px solid var(--line);border-radius:7px;
-    padding:3px 8px;margin:0 6px 6px 0;font-size:12px;color:#c3cee6;font-family:ui-monospace,Menlo,monospace}
-  .v .dot{background:var(--vault)} .v{border-color:#3a2f12}
-  .f .dot{background:var(--facts)}
-  .a .dot{background:var(--activity)}
-  .m .dot{background:var(--meaning)}
-  .pill{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.06em}
-  .pill.live{background:rgba(20,184,166,.16);color:#5eead4}
-  .pill.road{background:rgba(139,92,246,.16);color:#c4b5fd}
-  .mut{color:var(--mut)} .empty{color:var(--dim);font-style:italic}
-  .foot{color:var(--dim);font-size:11.5px;margin-top:26px;text-align:center}
-  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .bar button{background:linear-gradient(180deg,#4189f7,#2563eb);color:#fff;border:0;border-radius:12px;
+    padding:0 24px;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+  .bar button:disabled{opacity:.5;cursor:default}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:11px 0 0}
+  .chip{background:var(--panel);border:1px solid var(--line);color:var(--mut);font-size:12px;
+    padding:7px 11px;border-radius:999px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--ink);border-color:var(--line2)}
+  .lbl{display:flex;align-items:center;gap:11px;margin:26px 0 13px;color:var(--dim);font-size:11px;
+    text-transform:uppercase;letter-spacing:.16em;font-weight:600}
+  .lbl .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+  .lbl.right .ln{background:linear-gradient(90deg,transparent,var(--line))}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;display:flex;flex-direction:column}
+  .card .top{display:flex;align-items:center;gap:9px;padding:13px 15px;border-bottom:1px solid var(--line)}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 10px currentColor}
+  .card h3{margin:0;font-size:14px;font-weight:600}
+  .card .lens{margin-left:auto;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.13em}
+  .cite{font-size:10.5px;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .ms{margin-left:6px;font-size:10px;color:var(--dim)}
+  .body{padding:13px 15px;font-size:12.5px;color:#cfdaee;line-height:1.55;flex:1;max-height:300px;overflow:auto}
+  .empty{color:var(--dim);font-style:italic}
+  .note{display:inline-block;background:#16203a;border:1px solid var(--line2);border-radius:7px;
+    padding:3px 9px;margin:0 5px 6px 0;font-size:11.5px;color:#cdd9f0;font-family:ui-monospace,Menlo,monospace}
+  table.kb{border-collapse:collapse;width:100%;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+  table.kb td{border-bottom:1px solid var(--line);padding:4px 8px 4px 0;color:#bcc8e2;white-space:nowrap}
+  table.kb tr:first-child td{color:var(--dim);text-transform:uppercase;letter-spacing:.04em;font-size:10px}
+  .md h4{margin:10px 0 5px;font-size:13px;color:var(--ink)}
+  .md strong{color:#fff;font-weight:650}
+  .md a{color:#7fb0ff;text-decoration:none}
+  .md ul{margin:6px 0;padding-left:18px}
+  .pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.05em}
+  .pill.road{background:rgba(152,113,240,.16);color:#c9b6f7}
+  code{color:#c9b6f7;background:#171f38;padding:1px 6px;border-radius:5px;font-size:11.5px}
+  .vault{grid-column:1 / -1}
+  .foot{color:var(--dim);font-size:11px;margin-top:30px;text-align:center;line-height:1.6}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -64,15 +72,15 @@
     <img src="/static/compass-logo.png" alt="Compass-BlackBox IQ" onerror="this.style.display='none'"/>
     <div class="brand">
       <h1>GM Louis — F.A.M. reasoning trace</h1>
-      <p>Compass-BlackBox IQ · one task, four surfaces, the seam made visible</p>
+      <p>Compass-BlackBox IQ · one task → four surfaces → the seam, made visible</p>
     </div>
     <div class="nav"><a href="/">← skill-forge</a></div>
   </header>
 
   <div class="thesis">
     Microsoft governs <b>grounding</b>; Compass-BlackBox IQ governs <b>memory &amp; competence</b>.
-    Ask GM Louis a task — it grounds across <b>F.A.M.</b> (Facts · Activity · Meaning) and recalls its
-    <b>governed vault</b>, each in its own lane, <b>never merged</b>.
+    Ask a task — GM Louis grounds across <b>F.A.M.</b> (Facts · Activity · Meaning), <em>rented</em> and read-only,
+    and recalls its <b>governed vault</b>, <em>owned</em> and human-gated. Two lanes, <b>never merged</b>.
   </div>
 
   <div class="bar">
@@ -81,22 +89,30 @@
     <button id="go" onclick="trace()">Trace</button>
   </div>
   <div class="chips" id="chips"></div>
+  <div id="status" class="ms" style="margin-top:10px;height:14px;color:var(--activity)"></div>
 
-  <div class="seam"><span class="ln"></span><span>grounding — rented, read-only</span><span class="ln"></span>
-    <span>governed memory — owned</span><span class="ln"></span></div>
-
+  <div class="lbl"><span>F.A.M. grounding — rented · read-only · source-tagged</span><span class="ln"></span></div>
   <div class="grid">
-    <div class="card f" id="c-foundry"><div class="top"><span class="dot"></span><h3>Foundry IQ</h3>
-      <span class="cite">[iq:]</span><span class="lens">Facts</span></div><div class="body" id="b-foundry"><span class="empty">—</span></div></div>
-    <div class="card a" id="c-work"><div class="top"><span class="dot"></span><h3>Work IQ</h3>
-      <span class="cite">[work:]</span><span class="lens">Activity</span></div><div class="body" id="b-work"><span class="empty">—</span></div></div>
-    <div class="card m" id="c-fabric"><div class="top"><span class="dot"></span><h3>Fabric IQ</h3>
-      <span class="cite">[fabric:]</span><span class="lens">Meaning</span></div><div class="body" id="b-fabric"><span class="empty">—</span></div></div>
-    <div class="card v" id="c-vault"><div class="top"><span class="dot"></span><h3>Vault — governed memory</h3>
-      <span class="cite">[vault:]</span><span class="lens">Owned</span></div><div class="body" id="b-vault"><span class="empty">—</span></div></div>
+    <div class="card f"><div class="top"><span class="dot" style="color:var(--facts)"></span><h3>Foundry IQ</h3>
+      <span class="cite">[iq:]</span><span class="lens">Facts</span></div>
+      <div class="body" id="b-foundry"><span class="empty">—</span></div></div>
+    <div class="card a"><div class="top"><span class="dot" style="color:var(--activity)"></span><h3>Work IQ</h3>
+      <span class="cite">[work:]</span><span class="lens">Activity</span></div>
+      <div class="body" id="b-work"><span class="empty">—</span></div></div>
+    <div class="card m"><div class="top"><span class="dot" style="color:var(--meaning)"></span><h3>Fabric IQ</h3>
+      <span class="cite">[fabric:]</span><span class="lens">Meaning</span></div>
+      <div class="body" id="b-fabric"><span class="empty">—</span></div></div>
   </div>
 
-  <div class="foot">Live calls to the BlackBox IQ (GGR) MCP server · grounding is read-only and never merged into the vault · Agents League @ AI Skills Fest 2026</div>
+  <div class="lbl right"><span class="ln"></span><span>governed memory — owned · human-gated · revertible</span></div>
+  <div class="grid">
+    <div class="card vault"><div class="top"><span class="dot" style="color:var(--vault)"></span><h3>Vault — governed memory</h3>
+      <span class="cite">[vault:]</span><span class="lens">Owned</span></div>
+      <div class="body" id="b-vault"><span class="empty">—</span></div></div>
+  </div>
+
+  <div class="foot">Live calls to the BlackBox IQ (GGR) MCP server · grounding is read-only and never merged into the vault<br/>
+    Agents League @ AI Skills Fest 2026 · Reasoning Agents track</div>
 </div>
 
 <script>
@@ -106,47 +122,77 @@ const EXAMPLES = [
   "Summarize recent emails about vendor payment terms, net-60, Vandelay, and the AP review.",
   "What are our standard payment terms?"
 ];
-const chips = document.getElementById('chips');
-EXAMPLES.forEach(t => { const c=document.createElement('span'); c.className='chip'; c.textContent=t.length>54?t.slice(0,52)+'…':t;
-  c.title=t; c.onclick=()=>{document.getElementById('q').value=t; trace();}; chips.appendChild(c); });
+const chips=document.getElementById('chips');
+EXAMPLES.forEach(t=>{const c=document.createElement('span');c.className='chip';c.textContent=t.length>56?t.slice(0,54)+'…':t;
+  c.title=t;c.onclick=()=>{document.getElementById('q').value=t;trace();};chips.appendChild(c);});
 
-function esc(s){return (s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+const esc=s=>(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 
-function renderVault(el, d){
-  const arr = (d && (d.results||d)) || [];
-  if(!Array.isArray(arr)||!arr.length){ el.innerHTML='<span class="empty">no governed notes recalled</span>'; return; }
-  el.innerHTML = arr.map(n=>`<span class="note">${esc(n.id||n.title||'note')}</span>`).join('')
-    + '<div class="mut" style="margin-top:8px">'+esc((arr[0].excerpt||'').slice(0,260))+'</div>';
+// minimal, safe markdown for Work IQ replies
+function md(t){
+  let h=esc(t||'');
+  h=h.replace(/^#{1,6}\s*(.+)$/gm,'<h4>$1</h4>');
+  h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  h=h.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  h=h.replace(/^\s*[-*]\s+(.+)$/gm,'<li>$1</li>');
+  h=h.replace(/(<li>[\s\S]*?<\/li>)/g,'<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g,'');
+  h=h.replace(/\n{2,}/g,'<br/><br/>').replace(/\n/g,'<br/>');
+  return '<div class="md">'+h+'</div>';
 }
-function renderGround(el, d, label){
-  if(!d){ el.innerHTML='<span class="empty">no response</span>'; return; }
-  if(d.error){ el.innerHTML='<span class="empty">'+esc(d.error)+'</span>'; return; }
-  if(d.available===false){ el.innerHTML='<span class="empty">'+esc(d.note||'no '+label+' results')+'</span>'; return; }
+// tab/CSV blob → compact table (Foundry KB content)
+function kbTable(t){
+  const rows=(t||'').split(/\n/).map(r=>r.split('\t').map(c=>c.trim()).filter(Boolean)).filter(r=>r.length>1);
+  if(rows.length<2) return null;
+  const show=rows.slice(0,7);
+  return '<table class="kb">'+show.map(r=>'<tr>'+r.slice(0,5).map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')
+    + (rows.length>7?'<tr><td style="color:var(--dim)">… '+(rows.length-7)+' more</td></tr>':'') + '</table>';
+}
+
+function ground(el,d,label){
+  if(!d){el.innerHTML='<span class="empty">no response</span>';return;}
+  if(d.error){el.innerHTML='<span class="empty">'+esc(d.error)+'</span>';return;}
+  if(d.available===false){el.innerHTML='<span class="empty">'+esc(d.note||('no '+label+' results'))+'</span>';return;}
   const r=(d.results&&d.results[0])||{};
   const src=r.title||r.knowledge_source||'';
-  el.innerHTML=(src?`<span class="note">${esc(src)}</span>`:'')+'<div style="margin-top:6px">'+esc((r.excerpt||'').slice(0,900))+'</div>';
+  const head=src?('<span class="note">'+esc(src)+'</span>'):'';
+  let body;
+  if((r.excerpt||'').indexOf('\t')>=0){ body=kbTable(r.excerpt)||esc(r.excerpt); }
+  else { body=md(r.excerpt||''); }
+  el.innerHTML=head+'<div style="margin-top:7px">'+body+'</div>';
 }
-function renderFabric(el,d){
-  el.innerHTML='<span class="pill road">ROADMAP</span><div class="mut" style="margin-top:10px">'+esc(d&&d.note||'')
-    +'</div><div style="margin-top:8px;color:#9aa7c6">Ontology authored in Microsoft Fabric IQ format (RDF/OWL): '
-    +'<code style="color:#c4b5fd">PaymentTerm → classifiedAs → TermDeviation → requiresApproval</code>. '
-    +'Live wiring (Fabric Data Agent / Ontology MCP) is the documented next step.</div>';
+function fabric(el,d){
+  el.innerHTML='<span class="pill road">ROADMAP — authored, not live</span>'
+    +'<div style="margin-top:10px;color:var(--mut)">'+esc(d&&d.note||'')+'</div>'
+    +'<div style="margin-top:9px;color:#aab6d6">Ontology (Microsoft Fabric IQ RDF/OWL): '
+    +'<code>PaymentTerm → classifiedAs → TermDeviation → requiresApproval</code> — the modeled <em>meaning</em> behind a net-60 escalation.</div>';
+}
+function vault(el,d){
+  const arr=(d&&(d.results||d))||[];
+  if(!Array.isArray(arr)||!arr.length){el.innerHTML='<span class="empty">no governed notes recalled</span>';return;}
+  const chips=arr.map(n=>'<span class="note">'+esc(n.id||n.title||'note')+'</span>').join('');
+  const top=arr[0]||{};
+  el.innerHTML=chips+'<div style="margin-top:9px;color:var(--mut)"><strong style="color:#fff">'+esc(top.title||top.id||'')+'</strong> — '
+    +esc((top.excerpt||'').replace(/^#.*\n/,'').slice(0,260))+'</div>'
+    +'<div style="margin-top:8px;color:var(--dim);font-size:11.5px">The agent cites only what it relied on; promotion of new skills is human-gated.</div>';
 }
 
 async function trace(){
-  const q=document.getElementById('q').value.trim(); if(!q) return;
-  const go=document.getElementById('go'); go.disabled=true; go.textContent='Tracing…';
-  ['vault','foundry','work','fabric'].forEach(k=>document.getElementById('b-'+k).innerHTML='<span class="empty">…</span>');
+  const q=document.getElementById('q').value.trim();if(!q)return;
+  const go=document.getElementById('go');go.disabled=true;go.textContent='Tracing…';
+  ['foundry','work','fabric','vault'].forEach(k=>document.getElementById('b-'+k).innerHTML='<span class="empty">querying…</span>');
+  const t0=performance.now();
   try{
     const res=await fetch('/api/trace',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:q})});
     const d=await res.json();
-    if(d.error){ alert(d.error); return; }
-    renderGround(document.getElementById('b-foundry'), d.foundry, 'Foundry IQ');
-    renderGround(document.getElementById('b-work'), d.work, 'Work IQ');
-    renderFabric(document.getElementById('b-fabric'), d.fabric);
-    renderVault(document.getElementById('b-vault'), d.vault);
-  }catch(e){ alert('Trace failed: '+e); }
-  finally{ go.disabled=false; go.textContent='Trace'; }
+    if(d.error){alert(d.error);return;}
+    ground(document.getElementById('b-foundry'),d.foundry,'Foundry IQ');
+    ground(document.getElementById('b-work'),d.work,'Work IQ');
+    fabric(document.getElementById('b-fabric'),d.fabric);
+    vault(document.getElementById('b-vault'),d.vault);
+    const ms=Math.round(performance.now()-t0);
+    document.getElementById('status').innerHTML='✓ live trace across 4 surfaces · '+ms+' ms · BlackBox IQ MCP server';
+  }catch(e){alert('Trace failed: '+e);}
+  finally{go.disabled=false;go.textContent='Trace';}
 }
 </script>
 </body>
