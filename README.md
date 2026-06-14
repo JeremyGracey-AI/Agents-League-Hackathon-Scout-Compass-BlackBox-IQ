@@ -5,7 +5,7 @@
 
 ---
 
-## The thesis
+## Compass-BlackBox IQ Thesis
 
 Microsoft's stack governs an agent's **permissions, actions, and grounding** — identity and policy (Agent 365),[^build2026] approval gates and spend caps (orchestration platforms),[^omnigent] and the intelligence layer it reasons over. **Compass-BlackBox IQ governs the layer no one else does: memory and competence.** What does your agent know? What did it do, and why? How does it improve — and who approved that?
 
