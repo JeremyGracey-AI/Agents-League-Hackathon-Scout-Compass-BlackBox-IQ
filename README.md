@@ -130,14 +130,15 @@ Where the third layer is non-optional:
 
 Compass-BlackBox IQ is the pattern, in 100% inspectable plain text.
 
-## The bigger picture
+## The bigger picture — one monorepo, three layers
 
-Compass-BlackBox IQ spans the full skill lifecycle. A companion authoring toolkit,
-[Scout-Compass / skill-forge](https://github.com/JeremyGracey-AI/Scout-Compass),
-handles how skills are *born* — build → preview → install. **This repository
-governs how an agent *uses and improves* them at run-time**, and is the Agents
-League hackathon entry. Same principle end to end: humans approve what agents
-propose.
+Compass-BlackBox IQ spans the full skill lifecycle in a single repo:
+
+- **`compass-rose/`** — *Compass Rose*: builds and installs role-aligned skills (CLI + 8 executive archetypes), plus **GM Louis's no-YAML web app** at `compass-rose/web/` — persona → preview → one-click install.
+- **`server/` + `demo/`** — *BlackBox IQ (GGR)*: the MCP server that governs, grounds (Foundry IQ), and records every decision (the blackbox + audit + human-gated promotion).
+- **`agent/`** — *GM Louis*: the reasoning agent's contract (and *Freelance GM*, the ungoverned "before").
+
+Same principle end to end: humans approve what agents propose. This is the Agents League hackathon entry.
 
 ## Roadmap
 
