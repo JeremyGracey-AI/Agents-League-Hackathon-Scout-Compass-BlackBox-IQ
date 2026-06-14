@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs><radialGradient id="bg8" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="#18244e"/><stop offset="60%" stop-color="#0a0e1a"/></radialGradient></defs>
+  <rect width="1920" height="1080" fill="url(#bg8)"/>
+  <image xlink:href="compass-logo.png" x="885" y="150" width="150" height="150"/>
+  <text x="960" y="392" text-anchor="middle" font-size="38" font-weight="700" fill="#e8eef9">Compass-BlackBox IQ</text>
+
+  <text x="960" y="510" text-anchor="middle" font-size="44" font-weight="750" fill="#ffffff">Microsoft governs permissions, actions &amp; grounding.</text>
+  <text x="960" y="572" text-anchor="middle" font-size="44" font-weight="750" fill="#ffffff">We govern the layer no one else does —</text>
+  <text x="960" y="634" text-anchor="middle" font-size="44" font-weight="750" fill="#7fb0ff">memory &amp; competence, in 100% inspectable plain text.</text>
+
+  <rect x="660" y="710" width="600" height="64" rx="32" fill="#10182c" stroke="#26324f"/>
+  <text x="960" y="751" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">Agents propose, humans promote.</text>
+
+  <g text-anchor="middle" font-size="20" fill="#aab6d6">
+    <text x="500" y="858">F.A.M. grounding</text>
+    <text x="500" y="888" font-size="16" fill="#5d6c8d">Facts · Activity · Meaning</text>
+    <text x="960" y="858">constant-comparative engine</text>
+    <text x="960" y="888" font-size="16" fill="#5d6c8d">fit · work · saturation</text>
+    <text x="1420" y="858">governed vault</text>
+    <text x="1420" y="888" font-size="16" fill="#5d6c8d">git · Obsidian · human-gated</text>
+  </g>
+
+  <text x="960" y="980" text-anchor="middle" font-size="20" fill="#93a2be">github.com/JeremyGracey-AI/Agents-League-Hackathon-Compass-BlackBox-IQ</text>
+  <text x="960" y="1014" text-anchor="middle" font-size="17" fill="#5d6c8d">Agents League @ AI Skills Fest 2026 · Reasoning Agents track · Built solo by Jeremy Gracey</text>
+</svg>
