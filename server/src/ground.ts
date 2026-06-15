@@ -336,7 +336,7 @@ export function groundingSummary(): string {
 
 /**
  * Registers each IQ grounding tool whose backend is configured. With none set,
- * registers nothing — the server exposes exactly the 9 governed-loop tools,
+ * registers nothing — the server exposes exactly the 10 governed-loop tools,
  * identical to the pre-IQ baseline. Returns the names registered.
  */
 export function registerGroundingTools(server: McpServer): string[] {
