@@ -22,8 +22,7 @@ Not a memory store, and not a logger — **a governance layer that makes an auto
 
 | Surface | URL | What it is |
 |---|---|---|
-| **Start here — landing page** | [compass-blackbox-iq-landing.vercel.app](https://compass-blackbox-iq-landing.vercel.app) | the front door: the thesis at a glance, with links out to all three surfaces below |
-| **Animated walkthrough** | [compass-blackbox-iq.vercel.app](https://compass-blackbox-iq.vercel.app) | the 8-panel explainer of the whole thesis — add [`?present=1`](https://compass-blackbox-iq.vercel.app/?present=1) for autoplay |
+| **Start here — landing page** | [compass-blackbox-iq-landing.vercel.app](https://compass-blackbox-iq-landing.vercel.app) | the front door: the thesis at a glance, with links out to every live surface |
 | **GM Louis** | [gm-louis.vercel.app](https://gm-louis.vercel.app) | the reasoning agent, live — ask it what it governs |
 | **Compass Rose** | [compass-rose-beta.vercel.app](https://compass-rose-beta.vercel.app) | the no-YAML skill-forge: pick a persona → preview role-fit skills → one-click install |
 
