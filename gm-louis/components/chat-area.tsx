@@ -192,12 +192,13 @@ export function ChatArea() {
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between px-5 py-4 md:px-8">
-        <div className="flex items-baseline gap-3">
-          <span className="font-display text-xl tracking-tight">GM Louis</span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:inline">
-            Agentic Governance Management
-          </span>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-lockup.png"
+          alt="GM Louis — Agentic Governance Management"
+          className="h-7 w-auto select-none md:h-8"
+          draggable={false}
+        />
         <div className="flex items-center gap-2">
           <span className="hidden rounded-full border border-accent/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent sm:inline-block">
             governed · cited
@@ -234,12 +235,16 @@ export function ChatArea() {
       {/* Body */}
       <div className="relative z-10 flex flex-1 flex-col items-center overflow-hidden">
         {empty ? (
-          <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-            <p className="fade-in-up mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-accent/90">
-              Agentic Governance Management
-            </p>
+          <div className="flex w-full min-w-0 max-w-2xl flex-1 flex-col items-center justify-center px-6 text-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-horizontal.png"
+              alt="GM Louis — Agentic Governance Management"
+              className="fade-in-up mb-6 w-72 max-w-full select-none sm:w-96 md:w-[440px]"
+              draggable={false}
+            />
             <h1
-              className="fade-in-up font-display text-4xl font-medium tracking-tight sm:text-5xl md:text-7xl"
+              className="fade-in-up font-display text-3xl font-medium tracking-tight sm:text-4xl md:text-5xl"
               style={{ animationDelay: "0.05s" }}
             >
               I&rsquo;m GM Louis.
@@ -248,11 +253,10 @@ export function ChatArea() {
               className="fade-in-up mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground"
               style={{ animationDelay: "0.12s" }}
             >
-              The <span className="text-foreground">GM</span> is for{" "}
-              <span className="text-foreground">Governance Management</span> — I practice{" "}
-              <span className="text-foreground">agentic governance management</span>: an enterprise operations
-              agent that runs under the Compass-BlackBox IQ contract, reasoning over Microsoft&rsquo;s F.A.M.
-              grounding and logging every decision to a vault the human owns.
+              An enterprise operations agent running under the{" "}
+              <span className="text-foreground">Compass-BlackBox IQ</span> contract — I reason over
+              Microsoft&rsquo;s <span className="text-foreground">F.A.M.</span> grounding and log every decision
+              to a vault the human owns.
             </p>
             <div className="fade-in-up mt-10 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "0.2s" }}>
               {QUICK.map((q) => (

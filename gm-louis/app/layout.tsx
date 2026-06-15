@@ -31,11 +31,7 @@ export const metadata: Metadata = {
   description:
     "GM Louis — Agentic Governance Management. The reasoning agent of Compass-BlackBox IQ: reasons over Microsoft's F.A.M. grounding and logs every decision to a governed vault the human owns.",
   icons: {
-    icon: [
-      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
-      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
+    icon: "/icon-32.png",
     apple: "/apple-icon.png",
   },
   openGraph: {
