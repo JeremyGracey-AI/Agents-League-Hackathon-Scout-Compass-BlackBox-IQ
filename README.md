@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/submission/banner.png" alt="Compass-BlackBox IQ — the governance layer for an agent's memory &amp; competence, grounded on Microsoft's F.A.M. intelligence layer" width="100%"/></p>
+<p align="center"><img src="docs/submission/banner.png" alt="Compass-BlackBox IQ — the governance layer for an autonomous agent's memory &amp; competence, grounded on Microsoft's F.A.M. intelligence layer" width="100%"/></p>
 
 <p align="center"><i>Agents League @ AI Skills Fest 2026 · Reasoning Agents track · Microsoft Foundry + MCP</i></p>
 
@@ -6,7 +6,9 @@
 
 ## Compass-BlackBox IQ Thesis
 
-Microsoft's stack governs an agent's **permissions, actions, and grounding** — identity and policy (Agent 365),[^build2026] approval gates and spend caps (orchestration platforms),[^omnigent] and the intelligence layer it reasons over. **Compass-BlackBox IQ governs the layer no one else does: memory and competence.** What does your agent know? What did it do, and why? How does it improve — and who approved that?
+Microsoft's stack governs an **autonomous agent's** permissions, actions, and grounding — identity and policy (Agent 365),[^build2026] approval gates and spend caps (orchestration platforms),[^omnigent] and the intelligence layer it reasons over. **Compass-BlackBox IQ governs the layer no one else does: memory and competence.** What does your agent know? What did it do, and why? How does it improve — and who approved that?
+
+> **Who it's for:** autonomous agents on Microsoft's stack — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned* — not one-shot chatbots or copilots.
 
 It is three parts working as one system:
 
@@ -14,7 +16,7 @@ It is three parts working as one system:
 - **F.A.M. grounding** — the agent reasons over Microsoft's intelligence layer as three orthogonal lenses: **Foundry IQ (Facts) · Work IQ (Activity) · Fabric IQ (Meaning)** — read-only, source-tagged, and *never merged* into governed memory.
 - **A competence engine** — an audit mines the decision records and drafts new skills from the notes the agent overlooked; a human approves them. Competence is developed the way a researcher builds theory: grounded theory's **constant comparative analysis** (fit · work · saturation).
 
-Not a memory store, and not a logger — **a governance layer that makes an agent's competence auditable, attributable, and revertible, in 100% inspectable plain text.**
+Not a memory store, and not a logger — **a governance layer that makes an autonomous agent's competence auditable, attributable, and revertible, in 100% inspectable plain text.**
 
 ---
 
@@ -141,52 +143,52 @@ and run the demo script in `demo/`.
 
 ## Where governed memory matters
 
-Three layers govern an agent, and the third is the one without a control plane:
+Three layers govern an autonomous agent. The first two already have a control plane. The third — *what it knows, did, and learned* — doesn't. That's the layer Compass-BlackBox IQ builds.
 
-| Layer | Governs | Who |
+| Layer | Governs | Control plane |
 |---|---|---|
-| Permissions & security | identity, policy, who/what an agent may touch | Agent 365 (Entra/Defender/Purview)[^build2026] |
-| Actions | approve/block/pause per action, spend, tools | orchestration platforms[^omnigent] |
-| **Memory & competence** | **what it knows, did, and learned — and who approved it** | **Compass-BlackBox IQ** |
+| Permissions & security | identity, policy, who/what the agent may touch | Agent 365 — Entra · Defender · Purview[^build2026] |
+| Actions | approve / block / pause per action, spend, tools | orchestration platforms[^omnigent] |
+| **Memory & competence** | **what it knows, did & learned — and who approved it** | **Compass-BlackBox IQ** |
 
-Where the third layer is non-optional:
+The third layer isn't optional when:
 
 - **Regulated decisions** (healthcare, finance, legal) — every action needs provenance, human-gated capability change, and revocable memory.
-- **Multi-agent teams** — when one agent's learned skill propagates across a fleet, a human must be able to see, approve, and revert what spreads.
-- **Long-running autonomy** — an always-on agent's competence drifts; the blackbox + audit make the drift visible and the human gate keeps it accountable.
+- **Multi-agent fleets** — when one agent's learned skill propagates to the rest, a human must be able to see, approve, and revert what spreads.
+- **Long-running autonomy** — an always-on agent's competence drifts; the blackbox + audit make the drift visible, and the human gate keeps it accountable.
 
-Compass-BlackBox IQ is the pattern, in 100% inspectable plain text.
+Same pattern every time: **memory you can read, competence you can revert** — in 100% inspectable plain text.
 
-## The bigger picture — one monorepo, three layers
+## The bigger picture — one platform, three layers
 
-Compass-BlackBox IQ spans the full skill lifecycle in a single repo:
+One repo, three layers — the full lifecycle of an autonomous agent's competence: **build** a skill, **reason** with it, **govern** the outcome.
 
-- **`compass-rose/`** — *Compass Rose*: builds and installs role-aligned skills (CLI + 8 executive archetypes), plus **GM Louis's no-YAML web app** at `compass-rose/web/` — persona → preview → one-click install.
-- **`server/` + `demo/`** — *BlackBox IQ (GGR)*: the MCP server that governs, grounds (Foundry IQ), and records every decision (the blackbox + audit + human-gated promotion).
-- **`agent/`** — *GM Louis*: the reasoning agent's contract (and *Freelance GM*, the ungoverned "before").
+- **Compass Rose** · `compass-rose/` — **builds** role-aligned skills: a CLI with 8 executive archetypes, plus the no-YAML **Compass Rose web app** (`compass-rose/web/`, powered by GM Louis) — *persona → preview → one-click install*.
+- **GM Louis** · `agent/` — **reasons** over the governed loop: the agent's contract that turns a task into cited decision records (shipped alongside *Freelance GM*, the ungoverned "before" for contrast).
+- **BlackBox IQ — GGR** · `server/` + `demo/` — **governs, grounds & records**: the MCP server enforces the human-gated invariant (**G**overnance), serves read-only F.A.M. grounding — Foundry IQ · Work IQ · Fabric IQ (**G**rounding), and writes the append-only blackbox + audit (**R**ecorder).
 
-Same principle end to end: humans approve what agents propose. This is the Agents League hackathon entry.
+One principle end to end — **agents propose, humans promote**. Build → reason → govern, in 100% inspectable plain text.
 
 ## Roadmap
 
-The governed-memory loop here is the foundation — the **BlackBox IQ (GGR)** layer:
-Governance, Grounding, Recorder. The full platform extends it:
+What's shipped here is the foundation — the full **GGR** loop (Governance · Grounding · Recorder),
+with F.A.M. grounding live on **Foundry IQ** (Facts) and **Work IQ** (Activity). The platform extends
+along three lines:
 
-- **Compass Rose** — skill direction & alignment: build role-aligned skills, the
-  open analog to "agents that learn how the business actually works."
-- **GM Louis** — the no-YAML web app: persona → preview → one-click install, so a
-  non-technical lead can stand up an aligned agent.
-- **Preventive governance** — block non-compliant actions in real time via the open
-  **Agent Control Specification**,[^acs] then **observe**: log, score, and explain
-  decisions after the fact with **ASSERT**-style evals.[^assert]
-- **Grounding** — add **Web IQ** for real-time facts alongside Foundry IQ.
+- **Complete F.A.M.** — **Fabric IQ** (Meaning) ships today as an authored, Microsoft-format ontology;
+  wire it live so the agent grounds on business *meaning*, not just facts and activity.
+- **Preventive governance** — today the blackbox governs *after* the fact (log, score, explain). Add
+  real-time blocking of non-compliant actions via the open **Agent Control Specification**[^acs] and
+  **ASSERT**-style evals[^assert] over the decision record.
+- **Fleet propagation** — promote a human-approved skill across a multi-agent fleet through one gate,
+  with per-agent provenance for what spread and why.
 
 Framework-agnostic and open source — it *consumes* Microsoft's trust stack rather
 than duplicating it, which makes it complementary, not competitive.
 
 ## Stack
 
-TypeScript · MCP SDK (streamable HTTP + stdio) · Microsoft Foundry Agent Service · Microsoft Foundry IQ (Azure AI Search) · simple-git · gray-matter · Obsidian-compatible vault
+TypeScript · MCP SDK (streamable HTTP + stdio) · Microsoft Foundry Agent Service · Foundry IQ (Azure AI Search) · Work IQ (M365 Copilot Gateway) · Fabric IQ (RDF/OWL ontology) · Flask · simple-git · gray-matter · Obsidian-compatible vault
 
 ---
 

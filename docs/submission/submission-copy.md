@@ -11,7 +11,7 @@ Compass-BlackBox IQ
 The flight recorder for autonomous agents — governed memory & competence in plain text, grounded on Microsoft's F.A.M. intelligence layer.
 
 ## Keywords / tags
-Microsoft Foundry · Foundry IQ · Work IQ · Fabric IQ · Microsoft 365 Copilot · MCP (Model Context Protocol) · AI agent governance · governed memory · audit trail · human-in-the-loop · grounded theory · git · Obsidian · reasoning agents · decision provenance · skill auditing · TypeScript
+Microsoft Foundry · Foundry IQ · Work IQ · Fabric IQ · Microsoft 365 Copilot · MCP (Model Context Protocol) · autonomous agents · Microsoft Scout · AI agent governance · governed memory · audit trail · human-in-the-loop · grounded theory · git · Obsidian · reasoning agents · decision provenance · skill auditing · TypeScript
 
 ---
 
@@ -20,9 +20,14 @@ Compass-BlackBox IQ governs the layer no one else does — an autonomous agent's
 
 ---
 
+## Who it's for
+Autonomous agents that reason and act over multi-step work and accumulate memory — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned* — not one-shot chatbots or copilots.
+
+---
+
 ## Full description
 
-**The problem.** Microsoft's stack governs what an agent is *allowed* to do — identity, permissions, actions, grounding. Nobody governs what it *knows*, *did*, and *learned*. When an agent makes a bad call, permission systems tell you it was *allowed*, not *why*. And when agents "learn," that learning is invisible — buried in vendor memory you can't read, diff, or revoke.
+**The problem.** Microsoft's stack governs what an autonomous agent is *allowed* to do — identity, permissions, actions, grounding. Nobody governs what it *knows*, *did*, and *learned*. When an agent makes a bad call, permission systems tell you it was *allowed*, not *why*. And when agents "learn," that learning is invisible — buried in vendor memory you can't read, diff, or revoke.
 
 **The idea.** An agent's entire memory — decisions, skills, knowledge — lives as plain Markdown in a git repository the human owns (Obsidian-compatible). Every write is a commit; the git log *is* the audit trail. The invariant, enforced in the tool layer (not the prompt): the agent's only write paths are **decision records** and **proposals**; promotion into active memory happens only through the human-gated `approve_proposal`. **Agents propose; humans promote.** `git revert` rolls back a skill — but the blackbox is append-only: **behavior is revertible, history is not.**
 

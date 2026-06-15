@@ -14,7 +14,7 @@
   <text x="160" y="640" font-size="30" fill="#aab6d6">Agent memory &amp; competence — in plain text, under git, owned by the human.</text>
 
   <rect x="160" y="712" width="1080" height="2" fill="#1d2840"/>
-  <text x="160" y="772" font-size="25" fill="#cdd9f0">Microsoft governs an agent's <tspan fill="#7fb0ff">permissions, actions &amp; grounding.</tspan></text>
+  <text x="160" y="772" font-size="25" fill="#cdd9f0">Microsoft governs an autonomous agent's <tspan fill="#7fb0ff">permissions, actions &amp; grounding.</tspan></text>
   <text x="160" y="814" font-size="25" fill="#cdd9f0">Compass-BlackBox IQ governs the layer no one else does — <tspan fill="#fff" font-weight="700">memory &amp; competence.</tspan></text>
 
   <g font-size="18" font-weight="600">

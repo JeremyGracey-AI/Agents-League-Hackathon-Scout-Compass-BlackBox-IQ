@@ -11,14 +11,14 @@
     <rect x="160" y="384" width="1600" height="158" rx="16" fill="#10162c" stroke="#6366f1"/>
     <text x="190" y="436" font-size="28" font-weight="700" fill="#a5b4fc">1 · Compass Rose</text>
     <text x="190" y="476" font-size="21" fill="#aab6d6">Direction &amp; skill alignment — build role-aligned skills (CLI + 8 executive archetypes),</text>
-    <text x="190" y="508" font-size="21" fill="#aab6d6">plus the GM Louis no-YAML web app: persona → preview → one-click install.</text>
+    <text x="190" y="508" font-size="21" fill="#aab6d6">plus the no-YAML Compass Rose web app (powered by GM Louis): persona → preview → one-click install.</text>
     <text x="1730" y="436" text-anchor="end" font-size="17" fill="#6366f1">compass-rose/</text>
 
     <rect x="160" y="558" width="1600" height="158" rx="16" fill="#0c1f1a" stroke="#10b981"/>
     <text x="190" y="610" font-size="28" font-weight="700" fill="#6ee7b7">2 · GM Louis</text>
-    <text x="190" y="650" font-size="21" fill="#aab6d6">The reasoning agent (Microsoft Foundry) + the human-facing dashboard —</text>
-    <text x="190" y="682" font-size="21" fill="#aab6d6">multi-step reasoning over F.A.M. grounding and governed memory, via MCP. Freelance GM = the ungoverned "before".</text>
-    <text x="1730" y="610" text-anchor="end" font-size="17" fill="#10b981">agent/ · compass-rose/web/</text>
+    <text x="190" y="650" font-size="21" fill="#aab6d6">The reasoning agent (Microsoft Foundry) — multi-step reasoning over F.A.M. grounding</text>
+    <text x="190" y="682" font-size="21" fill="#aab6d6">and governed memory, via MCP. Freelance GM = the ungoverned "before" for contrast.</text>
+    <text x="1730" y="610" text-anchor="end" font-size="17" fill="#10b981">agent/</text>
 
     <rect x="160" y="732" width="1600" height="158" rx="16" fill="#1c1407" stroke="#f59e0b"/>
     <text x="190" y="784" font-size="28" font-weight="700" fill="#fcd34d">3 · BlackBox IQ (GGR)</text>
