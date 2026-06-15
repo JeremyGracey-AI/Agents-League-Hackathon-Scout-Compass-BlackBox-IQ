@@ -25,50 +25,50 @@ prompt**, and the **voice-over** that plays over it, in assembly order.
 ## Clip 2 — The gap  ·  ~15s
 **Generate from:** `slide-02-problem.png`
 **Seedance motion:** A soft light-sweep passes left-to-right; the bottom amber "memory & competence" row pulses with a warm glow.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > Three layers govern an autonomous agent. The first two have a control plane — identity and permissions, approval gates and spend caps. The third — its **memory and its competence** — has nobody. That's the layer we built.
 
 ## Clip 3 — Governed memory  ·  ~25s
 **Generate from:** `architecture.png`
 **Seedance motion:** Slow gentle push-in; the three colored F.A.M. traces and the dashed seam line glow and pulse softly; the amber vault panel breathes. Everything stays sharp and readable.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > Here's how. The agent's entire memory — its decisions, its skills, its knowledge — lives as plain Markdown in a Git repository **the human owns**. Every action becomes an immutable, cited decision record. The Git log *is* the audit trail. And the invariant is enforced in the tool layer, not the prompt: the agent can only ever write decisions and proposals. It can never touch its own active memory.
 
 ## Clip 4 — F.A.M. grounding  ·  ~25s
 **Generate from:** `slide-03-fam.png`
 **Seedance motion:** The three colored traces appear to flow from the compass and converge at the seam; the vault glows amber.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > To reason, it grounds across Microsoft's intelligence layer — **F.A.M.**: Facts from Foundry IQ, Activity from Work IQ, and Meaning from Fabric IQ. Three lenses on the enterprise world, each earning its own citation. But grounding is **rented** and read-only — it's never merged into the memory the human owns. That seam is the whole thesis.
 
 ## Clip 5 — The loop + safety  ·  ~28s
 **Generate from:** `slide-05-loop.png`
 **Seedance motion:** A small bright pulse travels around the loop of steps; the amber "human gate" node glows brightest.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > Then it gets better at its job. An audit mines the decision records and finds where the agent freelanced — where it acted without citing what it should have known. It drafts a new skill from the notes the agent overlooked, and a human approves it. **Agents propose; humans promote.**
 > `git revert` rolls back a skill — but the blackbox is append-only. **Behavior is revertible; history is not.** And when the agent freelances, its citations come back honestly **empty** — a designed signal, never patched over.
 
 ## Clip 6 — The competence engine  ·  ~12s
 **Generate from:** `slide-06-engine.png`
 **Seedance motion:** The connector arrows between each left-column tool and its right-column term draw in one by one, left to right; the "fit + work" row glows amber.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > We measure competence the way a researcher builds theory — constant comparison over the agent's own decisions, with *fit* and *work* as the test.
 
 ## Clip 7 — It runs  ·  ~15s
 **Generate from:** `slide-04-real.png`
 **Seedance motion:** The green LIVE badges and the amber ROADMAP badge pulse gently; a thin highlight scan-line sweeps top to bottom once.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > And none of this is a concept. It runs. Foundry IQ and Work IQ ground **live** against real Microsoft endpoints. Every decision is a real, server-verified record. Nothing here is faked — every claim is backed by a live artifact you can open in the repo.
 
 ## Clip 8 — Three layers  ·  ~12s
 **Generate from:** `slide-07-platform.png`
 **Seedance motion:** The three layer cards light up in sequence top to bottom — blue, then teal, then amber rail glowing as each is named.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > Three layers, one platform: **Compass Rose** builds the skills, **GM Louis** reasons, and **BlackBox IQ** governs and records.
 
 ## Clip 9 — Close  ·  ~12s
 **Generate from:** `slide-08-close.png`
 **Seedance motion:** Everything settles; the line "Agents propose, humans promote" glows softly, then a slow gentle fade.
-**Voice-over:**
+**Voice-over:**Read it like a senior engineer who's sure of it. 
 > Microsoft governs permissions and grounding. We govern the layer no one else does — an autonomous agent's **memory and competence**, in a hundred percent inspectable plain text. Agents propose. Humans promote.
 
 ---
