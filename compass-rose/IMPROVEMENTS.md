@@ -12,8 +12,7 @@ Status date: 2026-06-07. Reflects the Scout docs as published at Build 2026 (202
 
 The toolkit's foundation is correct. Confirmed against Microsoft Learn:
 
-- Scout is a real Windows/macOS desktop agent (Frontier preview, launched 2026-06-02),
-  built on the OpenClaw local-agent platform.
+- Scout is a real Windows/macOS desktop agent (Frontier preview, launched 2026-06-02).
 - Custom skills are `SKILL.md` files in folders under `~/.copilot/skills/`
   (global) or `~/.copilot/m-skills/` (synced). Bundled skills ship with the app.
 - Scout auto-discovers them at the start of each conversation. No restart, no registration.
@@ -135,7 +134,7 @@ it doesn't.
 | Proactive/contextual suggestions | Adopt → map to Scout | Implement as Automations + Heartbeat, not a custom UI. |
 | Executive persona config (stakeholders, recurring reports, comms style) | Adopt | This is P4 persona-schema work. |
 | Categorization / tagging / versioning / sharing | Partial | Versioning = git + `m-skills` sync. Tagging is low value for file-based skills. |
-| **"Scout is internal Microsoft tooling"** | Correct | It's a public Frontier-preview desktop app on OpenClaw, not internal tooling. |
+| **"Scout is internal Microsoft tooling"** | Correct | It's a public Frontier-preview desktop agent, not internal tooling. |
 | **"Skills files are JSON/YAML"** | Correct | They are `SKILL.md` — Markdown body + YAML frontmatter; only `description` required. |
 | **"Register/update skills via a Scout API or CLI"** | Correct | No skills API. Installation = drop a folder in `~/.copilot/skills/`; auto-discovered. |
 | **"Skills have a Parameters/Arguments block + execution logic"** | Correct | Skills are prompt-style instructions. Scout elicits parameters at runtime by asking; it executes via its own tools (filesystem, shell, browser, `m365_*`, WorkIQ). |
