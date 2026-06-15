@@ -21,7 +21,7 @@ Compass-BlackBox IQ governs the layer no one else does — an autonomous agent's
 ---
 
 ## Who it's for
-Autonomous agents that reason and act over multi-step work and accumulate memory — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned* — not one-shot chatbots or copilots.
+Autonomous agents that reason and act over multi-step work and accumulate memory — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned*. A chatbot or copilot can use it too — it's just optimized for agents that act and accumulate memory across many steps, where that governance matters most.
 
 ---
 

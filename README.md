@@ -8,7 +8,7 @@
 
 Microsoft's stack governs an **autonomous agent's** permissions, actions, and grounding — identity and policy (Agent 365),[^build2026] approval gates and spend caps (orchestration platforms),[^omnigent] and the intelligence layer it reasons over. **Compass-BlackBox IQ governs the layer no one else does: memory and competence.** What does your agent know? What did it do, and why? How does it improve — and who approved that?
 
-> **Who it's for:** autonomous agents on Microsoft's stack — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned* — not one-shot chatbots or copilots.
+> **Who it's for:** autonomous agents on Microsoft's stack — built for **Microsoft Scout**, and portable to any MCP-capable agent runtime. It governs what the agent *knows, did, and learned* — optimized for agents that act and learn across many steps. A chatbot or copilot can use it too; it just isn't where the payoff is greatest.
 
 It is three parts working as one system:
 
