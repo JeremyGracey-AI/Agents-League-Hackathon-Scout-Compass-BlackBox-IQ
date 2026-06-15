@@ -1,15 +1,15 @@
 "use client"
 
-import { ArrowUp, Mic, MicOff, Paperclip, Settings, Plus, Volume2, VolumeX } from "lucide-react"
+import { ArrowUp, Mic, MicOff, Volume2, VolumeX, Plus, Square } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useRef, useState } from "react"
-import { ParticleOrb } from "@/components/particle-orb"
+import { SentientSphere } from "@/components/sentient-sphere"
 import ReactMarkdown from "react-markdown"
 
 type Msg = { id: string; role: "user" | "assistant"; content: string }
 
 const QUICK = [
-  "What do you govern that Microsoft doesn't?",
+  "What does the GM in your name stand for?",
   "Walk me through the governed loop.",
   "What is F.A.M. grounding?",
 ]
@@ -22,15 +22,50 @@ export function ChatArea() {
   const [messages, setMessages] = useState<Msg[]>([])
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
+  const [listening, setListening] = useState(false)
+  const [speakOn, setSpeakOn] = useState(true)
+  const [playingId, setPlayingId] = useState<string | null>(null)
   const endRef = useRef<HTMLDivElement>(null)
   const taRef = useRef<HTMLTextAreaElement>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [listening, setListening] = useState(false)
-  const [speakOn, setSpeakOn] = useState(true)
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, loading])
+
+  function stopAudio() {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+    }
+    setPlayingId(null)
+  }
+
+  // Gesture-tied playback: called from a click (reliable) or best-effort after a stream.
+  async function speak(text: string, id: string) {
+    try {
+      if (playingId === id) {
+        stopAudio()
+        return
+      }
+      stopAudio()
+      const res = await fetch("/api/speak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      })
+      if (!res.ok || res.status === 204) return // no key / unavailable → stay silent
+      const blob = await res.blob()
+      if (!blob.size) return
+      const a = new Audio(URL.createObjectURL(blob))
+      audioRef.current = a
+      a.onended = () => setPlayingId((cur) => (cur === id ? null : cur))
+      setPlayingId(id)
+      await a.play().catch(() => setPlayingId(null))
+    } catch {
+      setPlayingId(null)
+    }
+  }
 
   async function send(text: string) {
     const content = text.trim()
@@ -57,44 +92,16 @@ export function ChatArea() {
         if (done) break
         const chunk = dec.decode(value, { stream: true })
         acc += chunk
-        setMessages((m) =>
-          m.map((mm) => (mm.id === asstId ? { ...mm, content: mm.content + chunk } : mm)),
-        )
+        setMessages((m) => m.map((mm) => (mm.id === asstId ? { ...mm, content: mm.content + chunk } : mm)))
       }
-      if (speakOn && acc.trim()) speak(acc)
+      if (speakOn && acc.trim()) speak(acc, asstId) // best-effort autoplay; tap the ▶ to be sure
     } catch {
       setMessages((m) =>
-        m.map((mm) =>
-          mm.id === asstId ? { ...mm, content: "GM Louis is unreachable right now." } : mm,
-        ),
+        m.map((mm) => (mm.id === asstId ? { ...mm, content: "GM Louis is unreachable right now." } : mm)),
       )
     } finally {
       setLoading(false)
     }
-  }
-
-  function stopAudio() {
-    if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current = null
-    }
-  }
-
-  async function speak(text: string) {
-    try {
-      stopAudio()
-      const res = await fetch("/api/speak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      })
-      if (!res.ok || res.status === 204) return
-      const blob = await res.blob()
-      if (!blob.size) return
-      const a = new Audio(URL.createObjectURL(blob))
-      audioRef.current = a
-      a.play().catch(() => {})
-    } catch {}
   }
 
   function startListening() {
@@ -120,49 +127,55 @@ export function ChatArea() {
   const empty = messages.length === 0
 
   return (
-    <main className="flex-1 flex flex-col relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black" />
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="shader-orb shader-orb-1" />
-        <div className="shader-orb shader-orb-2" />
-        <div className="shader-orb shader-orb-3" />
+    <main className="relative flex h-dvh w-full flex-col overflow-hidden bg-background text-foreground">
+      {/* Sentient sphere — the living centerpiece, behind everything */}
+      <div
+        className={`pointer-events-none fixed inset-0 z-0 flex items-center justify-center transition-opacity duration-700 ${
+          empty ? "opacity-90" : "opacity-30"
+        }`}
+      >
+        <div className="aspect-square w-[min(86vw,640px)]">
+          <SentientSphere />
+        </div>
       </div>
-      <div className="absolute inset-0 opacity-[0.15] grid-background" />
+      {/* legibility scrim */}
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(5,5,5,0.7)_100%)]" />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-border/50 backdrop-blur-sm bg-background/30">
-        <div className="flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/compass-logo.png" alt="" className="w-7 h-7 rounded-lg" />
-          <span className="text-base font-semibold tracking-tight">GM Louis</span>
-          <span className="text-xs text-muted-foreground hidden sm:inline">
-            reasoning agent · Compass-BlackBox IQ
+      <header className="relative z-10 flex items-center justify-between px-5 py-4 md:px-8">
+        <div className="flex items-baseline gap-3">
+          <span className="font-display text-xl tracking-tight">GM Louis</span>
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:inline">
+            GM · Governance Management
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-medium text-amber-300/80 border border-amber-400/30 rounded-full px-2.5 py-1">
+          <span className="rounded-full border border-accent/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
             governed · cited
           </span>
           <Button
             variant="ghost"
             size="icon"
-            className="btn-3d h-8 w-8 text-muted-foreground hover:text-foreground"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
             aria-label={speakOn ? "Mute GM Louis" : "Unmute GM Louis"}
             onClick={() => {
               setSpeakOn((v) => !v)
               stopAudio()
             }}
           >
-            {speakOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            {speakOn ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
           </Button>
           {!empty && (
             <Button
               variant="ghost"
               size="sm"
-              className="btn-3d gap-2 text-muted-foreground hover:text-foreground"
-              onClick={() => setMessages([])}
+              className="gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
+              onClick={() => {
+                stopAudio()
+                setMessages([])
+              }}
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="h-4 w-4" />
               New
             </Button>
           )}
@@ -170,59 +183,91 @@ export function ChatArea() {
       </header>
 
       {/* Body */}
-      <div className="relative z-10 flex-1 flex flex-col items-center overflow-hidden">
+      <div className="relative z-10 flex flex-1 flex-col items-center overflow-hidden">
         {empty ? (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 w-full">
-            <div className="relative mb-6">
-              <ParticleOrb />
-            </div>
-            <h1 className="text-3xl md:text-4xl font-semibold text-foreground mb-3 text-center font-[var(--font-heading)] tracking-tight">
+          <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+            <p className="fade-in-up mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-accent/90">
+              Governance Management · not General Manager
+            </p>
+            <h1
+              className="fade-in-up font-display text-5xl font-medium tracking-tight md:text-7xl"
+              style={{ animationDelay: "0.05s" }}
+            >
               I&rsquo;m GM Louis.
             </h1>
-            <p className="text-muted-foreground text-center max-w-xl mb-8">
-              I reason over Microsoft&rsquo;s F.A.M. grounding and log every decision to a vault the
-              human owns. Ask me anything.
+            <p
+              className="fade-in-up mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground"
+              style={{ animationDelay: "0.12s" }}
+            >
+              The <span className="text-foreground">GM</span> is for{" "}
+              <span className="text-foreground">Governance Management</span> — I&rsquo;m an enterprise operations
+              agent that runs under the Compass-BlackBox IQ contract. I reason over Microsoft&rsquo;s F.A.M.
+              grounding and log every decision to a vault the human owns.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 max-w-2xl">
+            <div className="fade-in-up mt-10 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "0.2s" }}>
               {QUICK.map((q) => (
-                <Button
+                <button
                   key={q}
-                  variant="secondary"
-                  className="btn-3d btn-glow bg-gradient-to-br from-secondary/90 to-secondary/70 text-foreground hover:from-secondary/70 hover:to-secondary/50 backdrop-blur-sm shadow-lg font-medium"
+                  data-cursor-hover
                   onClick={() => send(q)}
+                  className="rounded-full border border-border bg-background/40 px-4 py-2 font-mono text-xs tracking-wide text-foreground/80 backdrop-blur-sm transition-colors hover:border-accent/60 hover:text-foreground"
                 >
                   {q}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
         ) : (
-          <div className="flex-1 w-full overflow-y-auto px-4 md:px-6 py-6">
-            <div className="max-w-3xl mx-auto flex flex-col gap-5">
+          <div className="w-full flex-1 overflow-y-auto px-4 py-6 md:px-6">
+            <div className="mx-auto flex max-w-3xl flex-col gap-5">
               {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-                >
+                <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 whitespace-pre-wrap leading-relaxed ${
+                    className={`max-w-[88%] whitespace-pre-wrap leading-relaxed ${
                       m.role === "user"
-                        ? "bg-gradient-to-br from-secondary/80 to-secondary/60 text-foreground"
-                        : "bg-background/40 border border-border/40 text-foreground/90"
+                        ? "rounded-2xl rounded-br-sm bg-secondary/70 px-4 py-3 text-foreground backdrop-blur-sm"
+                        : "rounded-2xl rounded-bl-sm border border-border/60 bg-background/55 px-4 py-3 text-foreground/90 backdrop-blur-md"
                     }`}
                   >
                     {m.content ? (
                       m.role === "assistant" ? (
-                        <div className="text-[15px] leading-relaxed [&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:my-1 [&_strong]:font-semibold [&_strong]:text-foreground [&_code]:bg-black/40 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-amber-200/90">
-                          <ReactMarkdown>{m.content}</ReactMarkdown>
+                        <div className="group">
+                          <div className="text-[15px] leading-relaxed [&_code]:rounded [&_code]:bg-black/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[13px] [&_code]:text-accent [&_li]:my-1 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_p]:my-2 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5">
+                            <ReactMarkdown>{m.content}</ReactMarkdown>
+                          </div>
+                          <div className="mt-2 flex items-center gap-2">
+                            <button
+                              data-cursor-hover
+                              onClick={() => speak(m.content, m.id)}
+                              aria-label={playingId === m.id ? "Stop" : "Play GM Louis' voice"}
+                              className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-accent"
+                            >
+                              {playingId === m.id ? (
+                                <>
+                                  <Square className="h-3 w-3 fill-current" />
+                                  <span className="flex items-end gap-[2px] h-4">
+                                    <span className="eq-bar" style={{ animationDelay: "0s" }} />
+                                    <span className="eq-bar" style={{ animationDelay: "0.15s" }} />
+                                    <span className="eq-bar" style={{ animationDelay: "0.3s" }} />
+                                    <span className="eq-bar" style={{ animationDelay: "0.45s" }} />
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <Volume2 className="h-3.5 w-3.5" />
+                                  speak
+                                </>
+                              )}
+                            </button>
+                          </div>
                         </div>
                       ) : (
                         m.content
                       )
                     ) : (
-                      <span className="inline-flex gap-1 items-center text-muted-foreground">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-300/80 animate-pulse" />
-                        thinking
+                      <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+                        reasoning
                       </span>
                     )}
                   </div>
@@ -234,8 +279,8 @@ export function ChatArea() {
         )}
 
         {/* Input */}
-        <div className="w-full max-w-3xl px-4 md:px-6 pb-6">
-          <div className="input-3d bg-gradient-to-br from-secondary/70 via-secondary/60 to-secondary/50 backdrop-blur-xl rounded-2xl border border-border/50 p-4 shadow-2xl">
+        <div className="w-full max-w-3xl px-4 pb-6 md:px-6">
+          <div className="rounded-2xl border border-border bg-background/60 p-3 backdrop-blur-xl transition-colors focus-within:border-accent/50">
             <textarea
               ref={taRef}
               value={input}
@@ -253,37 +298,36 @@ export function ChatArea() {
               }}
               placeholder="Ask GM Louis…"
               rows={1}
-              className="w-full bg-transparent border-none outline-none resize-none text-foreground placeholder:text-muted-foreground text-lg min-h-[44px] max-h-40 font-normal"
+              className="max-h-40 min-h-[40px] w-full resize-none border-none bg-transparent text-foreground outline-none placeholder:text-muted-foreground"
             />
-            <div className="flex items-center justify-between pt-2 border-t border-border/30">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <Paperclip className="w-4 h-4 opacity-60" />
-                <Settings className="w-4 h-4 opacity-60" />
-              </div>
+            <div className="flex items-center justify-between pt-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                F.A.M. grounded · vault-logged
+              </span>
               <div className="flex items-center gap-2">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`btn-3d h-9 w-9 ${listening ? "text-red-400" : "text-white hover:text-foreground"}`}
+                  className={`h-9 w-9 ${listening ? "text-destructive" : "text-muted-foreground hover:text-foreground"}`}
                   aria-label="Voice input"
                   onClick={startListening}
                 >
-                  {listening ? <MicOff className="w-4 h-4 animate-pulse" /> : <Mic className="w-4 h-4" />}
+                  {listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
                 </Button>
                 <Button
                   size="icon"
                   disabled={loading || !input.trim()}
                   onClick={() => send(input)}
-                  className="btn-3d btn-glow h-9 w-9 rounded-full bg-gradient-to-br from-amber-400 via-amber-600 to-amber-800 hover:from-amber-300 hover:to-amber-700 text-black shadow-xl disabled:opacity-40"
+                  className="h-9 w-9 rounded-full bg-accent text-accent-foreground shadow-lg transition-colors hover:bg-accent/85 disabled:opacity-40"
                   aria-label="Send"
                 >
-                  <ArrowUp className="w-5 h-5" />
+                  <ArrowUp className="h-5 w-5" />
                 </Button>
               </div>
             </div>
           </div>
-          <p className="text-center text-[11px] text-muted-foreground mt-3">
-            Agents propose, humans promote · grounding is rented, memory is owned
+          <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Agents propose · humans promote — grounding is rented, memory is owned
           </p>
         </div>
       </div>
