@@ -163,7 +163,7 @@ Same pattern every time: **memory you can read, competence you can revert** — 
 
 One repo, three layers — the full lifecycle of an autonomous agent's competence: **build** a skill, **reason** with it, **govern** the outcome.
 
-- **Compass Rose** · `compass-rose/` — **builds** role-aligned skills: a CLI with 8 executive archetypes, plus the no-YAML **Compass Rose web app** (`compass-rose/web/`, powered by GM Louis) — *persona → preview → one-click install*.
+- **Compass Rose** · `compass-rose/` — **builds** role-aligned skills: a CLI with 8 executive archetypes, plus the no-YAML **Compass Rose web app** (`compass-rose/web/`, powered by GM Louis) — [*persona → preview → one-click install*](docs/compass-rose-skill-lifecycle.md).
 - **GM Louis** · `agent/` — **reasons** over the governed loop: the agent's contract that turns a task into cited decision records (shipped alongside *Freelance GM*, the ungoverned "before" for contrast).
 - **BlackBox IQ — GGR** · `server/` + `demo/` — **governs, grounds & records**: the MCP server enforces the human-gated invariant (**G**overnance), serves read-only F.A.M. grounding — Foundry IQ · Work IQ · Fabric IQ (**G**rounding), and writes the append-only blackbox + audit (**R**ecorder).
 
