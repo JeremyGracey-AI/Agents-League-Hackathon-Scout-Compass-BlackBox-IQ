@@ -78,6 +78,17 @@
     <b>Agents propose; humans promote.</b> Behavior is revertible; history is not.
   </div>
 
+  {% if showcase %}
+  <div style="margin-top:6px;background:#0f1830;border:1px solid #26324f;border-radius:16px;padding:30px 26px;text-align:center">
+    <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5d6c8d;font-family:ui-monospace,Menlo,monospace">Live feature</div>
+    <h2 style="margin:12px 0 8px;font-size:23px;color:#e8ebf0;font-weight:700">The governed vault runs against the MCP server</h2>
+    <p style="color:#9aa3b2;font-size:14.5px;max-width:660px;margin:0 auto 20px;line-height:1.65">This hosted page showcases the <b style="color:#e8ebf0">skill-forge</b>. The live blackbox — decision records, the git audit trail, and proposals at the <span style="color:#f59e0b;font-weight:600">human gate</span> — is served by the Compass-BlackBox&nbsp;IQ MCP server over its git vault. Watch it in the walkthrough.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="https://compass-blackbox-iq.vercel.app/?present=1" style="background:#f59e0b;color:#1c1407;font-weight:700;text-decoration:none;padding:11px 20px;border-radius:10px;font-size:14px">▶ Watch the walkthrough</a>
+      <a href="/" style="border:1px solid #2c3a5e;color:#aab6d6;text-decoration:none;padding:11px 20px;border-radius:10px;font-size:14px">← Back to skill-forge</a>
+    </div>
+  </div>
+  {% else %}
   <div class="cols">
     <div>
       <div class="lbl"><span>decision records — the blackbox (append-only)</span><span class="ln"></span></div>
@@ -90,6 +101,7 @@
       <div id="proposals"><div class="empty">loading…</div></div>
     </div>
   </div>
+  {% endif %}
 
   <div class="invariant">
     <b>The invariant (enforced by the server, not the prompt):</b> the agent's only write paths are decision
@@ -139,7 +151,7 @@ async function load(){
     renderDecisions(d.decisions||[]); renderAudit(d.audit||[]); renderProps(d.proposals||[]);
   }catch(e){ document.getElementById('decisions').innerHTML='<div class="empty">load failed: '+e+'</div>'; }
 }
-load();
+{% if not showcase %}load();{% endif %}
 </script>
 </body>
 </html>

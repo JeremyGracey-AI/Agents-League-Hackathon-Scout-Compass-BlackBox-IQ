@@ -85,6 +85,17 @@
     and recalls its <b>governed vault</b>, <em>owned</em> and human-gated. Two lanes, <b>never merged</b>.
   </div>
 
+  {% if showcase %}
+  <div style="margin-top:26px;background:#0f1830;border:1px solid #26324f;border-radius:16px;padding:30px 26px;text-align:center">
+    <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5d6c8d;font-family:ui-monospace,Menlo,monospace">Live feature</div>
+    <h2 style="margin:12px 0 8px;font-size:23px;color:#e8ebf0;font-weight:700">The reasoning trace runs against the MCP server</h2>
+    <p style="color:#9aa3b2;font-size:14.5px;max-width:640px;margin:0 auto 20px;line-height:1.65">This hosted page showcases the <b style="color:#e8ebf0">skill-forge</b>. GM&nbsp;Louis's live F.A.M. trace — grounding across <span style="color:#4f8cff;font-weight:600">Foundry&nbsp;IQ</span>, <span style="color:#16c2a3;font-weight:600">Work&nbsp;IQ</span> and the <span style="color:#f59e0b;font-weight:600">governed&nbsp;vault</span> — runs against the Compass-BlackBox&nbsp;IQ MCP server. Watch it in the walkthrough.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="https://compass-blackbox-iq.vercel.app/?present=1" style="background:#f59e0b;color:#1c1407;font-weight:700;text-decoration:none;padding:11px 20px;border-radius:10px;font-size:14px">▶ Watch the walkthrough</a>
+      <a href="/" style="border:1px solid #2c3a5e;color:#aab6d6;text-decoration:none;padding:11px 20px;border-radius:10px;font-size:14px">← Back to skill-forge</a>
+    </div>
+  </div>
+  {% else %}
   <div class="bar">
     <input id="q" placeholder="Ask a task — e.g. a vendor invoice with net-60 terms…"
       value="A vendor invoice from Vandelay requests net-60 terms — how should we handle it?"/>
@@ -112,6 +123,7 @@
       <span class="cite">[vault:]</span><span class="lens">Owned</span></div>
       <div class="body" id="b-vault"><span class="empty">—</span></div></div>
   </div>
+  {% endif %}
 
   <div class="foot">Live calls to the BlackBox IQ (GGR) MCP server · grounding is read-only and never merged into the vault<br/>
     Agents League @ AI Skills Fest 2026 · Reasoning Agents track</div>
@@ -125,8 +137,8 @@ const EXAMPLES = [
   "What are our standard payment terms?"
 ];
 const chips=document.getElementById('chips');
-EXAMPLES.forEach(t=>{const c=document.createElement('span');c.className='chip';c.textContent=t.length>56?t.slice(0,54)+'…':t;
-  c.title=t;c.onclick=()=>{document.getElementById('q').value=t;trace();};chips.appendChild(c);});
+if(chips){EXAMPLES.forEach(t=>{const c=document.createElement('span');c.className='chip';c.textContent=t.length>56?t.slice(0,54)+'…':t;
+  c.title=t;c.onclick=()=>{document.getElementById('q').value=t;trace();};chips.appendChild(c);});}
 
 const esc=s=>(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 

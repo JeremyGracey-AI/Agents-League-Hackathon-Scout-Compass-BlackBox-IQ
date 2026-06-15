@@ -475,9 +475,18 @@ def _mcp_call(tool, arguments, timeout=55):
     return None
 
 
+def _hosted_showcase() -> bool:
+    """True on a hosted deploy (Vercel) with no reachable MCP server — the trace/vault
+    views are live features, so render an intentional card instead of a failed fetch."""
+    on_vercel = bool(os.environ.get("VERCEL"))
+    mcp = MCP_URL or ""
+    mcp_local = "127.0.0.1" in mcp or "localhost" in mcp
+    return on_vercel and mcp_local
+
+
 @app.route("/trace")
 def trace_page():
-    return render_template("trace.html")
+    return render_template("trace.html", showcase=_hosted_showcase())
 
 
 @app.route("/api/trace", methods=["POST"])
@@ -522,7 +531,7 @@ def _read_decisions(limit=12):
 
 @app.route("/vault")
 def vault_page():
-    return render_template("vault.html")
+    return render_template("vault.html", showcase=_hosted_showcase())
 
 
 @app.route("/api/vault")
