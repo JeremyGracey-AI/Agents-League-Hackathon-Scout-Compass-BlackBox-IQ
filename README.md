@@ -61,6 +61,8 @@ flowchart LR
 
 ## Architecture
 
+<p align="center"><img src="docs/architecture.png" alt="Compass-BlackBox IQ architecture — F.A.M. grounding (Foundry IQ · Work IQ · Fabric IQ), read-only and never merged, flows into GM Louis (the Microsoft Foundry agent), which acts and logs into the BlackBox IQ (GGR) governed vault; the constant-comparative competence engine and the human gate promote skills" width="100%"/></p>
+
 ```
 Foundry Agent ("GM Louis")  ──MCP (streamable HTTP, auth-gated)──►  BlackBox IQ (GGR) server (TypeScript)
    multi-step reasoning      12 tools                                │
