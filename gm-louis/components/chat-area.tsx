@@ -199,7 +199,7 @@ export function ChatArea() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="rounded-full border border-accent/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+          <span className="hidden rounded-full border border-accent/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent sm:inline-block">
             governed · cited
           </span>
           <Button
@@ -239,7 +239,7 @@ export function ChatArea() {
               Agentic Governance Management
             </p>
             <h1
-              className="fade-in-up font-display text-5xl font-medium tracking-tight md:text-7xl"
+              className="fade-in-up font-display text-4xl font-medium tracking-tight sm:text-5xl md:text-7xl"
               style={{ animationDelay: "0.05s" }}
             >
               I&rsquo;m GM Louis.
@@ -348,7 +348,7 @@ export function ChatArea() {
               }}
               placeholder="Ask GM Louis…"
               rows={1}
-              className="max-h-40 min-h-[40px] w-full resize-none border-none bg-transparent text-foreground outline-none placeholder:text-muted-foreground"
+              className="max-h-40 min-h-[40px] w-full resize-none border-none bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground"
             />
             <div className="flex items-center justify-between pt-1">
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">

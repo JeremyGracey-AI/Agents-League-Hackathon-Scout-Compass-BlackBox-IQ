@@ -22,7 +22,11 @@ const inter = Inter({
   display: "swap",
 })
 
+const OG_DESC =
+  "The reasoning agent of Compass-BlackBox IQ — F.A.M.-grounded, vault-logged. Agents propose, humans promote."
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gm-louis.vercel.app"),
   title: "GM Louis · Agentic Governance Management · Compass-BlackBox IQ",
   description:
     "GM Louis — Agentic Governance Management. The reasoning agent of Compass-BlackBox IQ: reasons over Microsoft's F.A.M. grounding and logs every decision to a governed vault the human owns.",
@@ -34,10 +38,26 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
+  openGraph: {
+    type: "website",
+    siteName: "GM Louis · Compass-BlackBox IQ",
+    url: "https://gm-louis.vercel.app",
+    title: "GM Louis · Agentic Governance Management",
+    description: OG_DESC,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "GM Louis — Agentic Governance Management" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GM Louis · Agentic Governance Management",
+    description: OG_DESC,
+    images: ["/og.png"],
+  },
 }
 
 export const viewport: Viewport = {
   themeColor: "#050505",
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
