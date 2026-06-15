@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <radialGradient id="bg" cx="72%" cy="-8%" r="115%">
+      <stop offset="0%" stop-color="#16224a"/>
+      <stop offset="58%" stop-color="#0a0e1a"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <!-- eyebrow -->
+  <text x="960" y="360" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="26" letter-spacing="8" fill="#5d6c8d">COMPASS-BLACKBOX IQ</text>
+
+  <!-- thesis -->
+  <text x="960" y="500" text-anchor="middle" font-size="66" fill="#9aa3b2">The governance layer for an</text>
+  <text x="960" y="582" text-anchor="middle" font-size="66" fill="#9aa3b2">autonomous agent&#8217;s</text>
+  <text x="960" y="700" text-anchor="middle" font-size="86" font-weight="750" fill="#e8ebf0">memory &amp; competence.</text>
+  <!-- amber underline under the emphasized line -->
+  <rect x="585" y="718" width="750" height="5" rx="2.5" fill="#f59e0b"/>
+
+  <!-- F.A.M. accent dots -->
+  <circle cx="930" cy="800" r="7" fill="#4f8cff"/>
+  <circle cx="960" cy="800" r="7" fill="#16c2a3"/>
+  <circle cx="990" cy="800" r="7" fill="#9871f0"/>
+</svg>
