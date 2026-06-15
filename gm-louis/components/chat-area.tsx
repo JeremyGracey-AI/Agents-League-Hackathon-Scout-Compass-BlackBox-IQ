@@ -328,8 +328,8 @@ export function ChatArea() {
           </div>
         )}
 
-        {/* Input — lifted off the bottom so it tucks under the sphere */}
-        <div className="w-full max-w-3xl px-4 pb-12 md:px-6 md:pb-24">
+        {/* Input — lifted off the bottom so it tucks under the sphere; mt keeps a gap from the quick-prompt pills */}
+        <div className="mt-8 w-full max-w-3xl px-4 pb-12 md:mt-12 md:px-6 md:pb-24">
           <div className="rounded-2xl border border-border bg-background/60 p-3 backdrop-blur-xl transition-colors focus-within:border-accent/50">
             <textarea
               ref={taRef}
@@ -346,7 +346,7 @@ export function ChatArea() {
                   send(input)
                 }
               }}
-              placeholder="Ask GM Louis…"
+              placeholder="Ask Louis…"
               rows={1}
               className="max-h-40 min-h-[40px] w-full resize-none border-none bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground"
             />
