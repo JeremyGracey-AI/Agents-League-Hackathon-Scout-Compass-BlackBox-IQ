@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <defs><radialGradient id="bg8" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="#18244e"/><stop offset="60%" stop-color="#0a0e1a"/></radialGradient></defs>
   <rect width="1920" height="1080" fill="url(#bg8)"/>
-  <image xlink:href="compass-logo.png" x="885" y="150" width="150" height="150"/>
+  <image xlink:href="compass-vault.png" x="885" y="150" width="150" height="150"/>
   <text x="960" y="392" text-anchor="middle" font-size="38" font-weight="700" fill="#e8eef9">Compass-BlackBox IQ</text>
 
   <text x="960" y="510" text-anchor="middle" font-size="44" font-weight="750" fill="#ffffff">Microsoft governs permissions, actions &amp; grounding.</text>

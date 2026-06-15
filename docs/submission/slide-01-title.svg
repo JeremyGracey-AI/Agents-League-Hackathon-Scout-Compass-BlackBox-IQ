@@ -5,7 +5,7 @@
     </radialGradient>
   </defs>
   <rect width="1920" height="1080" fill="url(#bg)"/>
-  <image xlink:href="compass-logo.png" x="160" y="150" width="150" height="150"/>
+  <image xlink:href="compass-vault.png" x="160" y="150" width="150" height="150"/>
   <text x="338" y="222" font-size="34" font-weight="700" fill="#e8eef9">Compass-BlackBox IQ</text>
   <text x="338" y="266" font-size="19" fill="#93a2be">Agents League @ AI Skills Fest 2026 · Reasoning Agents track</text>
 

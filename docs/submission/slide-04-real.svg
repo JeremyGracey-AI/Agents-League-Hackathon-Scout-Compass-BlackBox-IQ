@@ -2,7 +2,7 @@
   <defs><radialGradient id="bg4" cx="78%" cy="-10%" r="95%"><stop offset="0%" stop-color="#16224a"/><stop offset="56%" stop-color="#0a0e1a"/></radialGradient>
     <g id="ck"><circle r="13" fill="rgba(22,194,163,.16)"/><path d="M-6,0 L-2,5 L7,-6" stroke="#5eead4" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></defs>
   <rect width="1920" height="1080" fill="url(#bg4)"/>
-  <image xlink:href="compass-logo.png" x="160" y="96" width="54" height="54"/>
+  <image xlink:href="compass-vault.png" x="160" y="96" width="54" height="54"/>
   <text x="230" y="133" font-size="22" font-weight="600" fill="#93a2be">Compass-BlackBox IQ</text>
 
   <text x="160" y="262" font-size="58" font-weight="750" fill="#ffffff">Not a concept. It runs — nothing faked.</text>
